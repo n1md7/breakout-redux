@@ -17,6 +17,8 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
     "paths": {
       "/src/*": ["src/*"]
     }

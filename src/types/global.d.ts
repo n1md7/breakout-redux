@@ -1,3 +1,5 @@
+/// <reference path="littlejsengine/build/littlejs.d.ts" />
+
 export declare global {
   interface Window {
     CrazyGames: {

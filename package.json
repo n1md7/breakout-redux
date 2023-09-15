@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "lil-gui": "^0.18.2",
+    "littlejsengine": "^1.6.4",
     "tiny-emitter": "^2.1.0",
     "yup": "^1.2.0"
   },
