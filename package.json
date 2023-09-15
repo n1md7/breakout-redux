@@ -1,0 +1,50 @@
+{
+  "name": "vite-template",
+  "private": true,
+  "description": "ViteJS + Typescript + Vitest",
+  "author": {
+    "name": "Harry Kodua",
+    "email": "b.kodua@gmail.com",
+    "url": "https://github.com/n1md7"
+  },
+  "license": "MIT",
+  "main": "dist/main.js",
+  "bugs": {
+    "url": "https://github.com/n1md7/vite-JS/issues"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode=development",
+    "build:github": "tsc && vite build --mode=github",
+    "build:crazy": "tsc && vite build --mode=crazy",
+    "build:itch": "tsc && vite build --mode=itch",
+    "test": "vitest --mode=test --no-watch",
+    "preview": "vite preview",
+    "format": "npx lint-staged",
+    "husky": "husky install"
+  },
+  "dependencies": {
+    "lil-gui": "^0.18.2",
+    "tiny-emitter": "^2.1.0",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "jsdom": "^22.1.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "3.0.3",
+    "sass": "^1.66.1",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+    "node": "18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "engineStrict": true
+}
