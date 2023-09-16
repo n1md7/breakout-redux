@@ -1,4 +1,5 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
+import { boolean } from 'yup';
 
 export class Paddle extends L.EngineObject {
   constructor(private readonly levelSize: L.Vector2) {

@@ -6,5 +6,6 @@ export class Wall extends L.EngineObject {
 
     this.setCollision(true);
     this.mass = 0; // Static object
+    this.color = new L.Color().setHex('#494746');
   }
 }

@@ -1,6 +1,6 @@
-$color: red;
-body{
-  p {
-    color: $color;
-  }
+$color: #494746;
+html, body {
+  background-color: $color!important;
+  padding: 0;
+  margin: 0;
 }
