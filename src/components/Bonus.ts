@@ -6,6 +6,7 @@ import { BonusType } from '/src/enums/bonus';
 
 export class Bonus extends L.EngineObject {
   private readonly type: BonusType;
+  private readonly sign: number = 1;
 
   constructor(position: L.Vector2, type: BonusType) {
     super(position, L.vec2(0.5));
@@ -13,10 +14,13 @@ export class Bonus extends L.EngineObject {
     this.type = type;
     this.setCollision(true);
     this.velocity = L.vec2(0, -0.1);
+
+    this.color = Colors[this.type];
+    this.sign = L.randInt(0, 1) === 0 ? -1 : 1;
   }
 
   override update() {
-    this.angle += 0.01;
+    this.angle += this.sign;
 
     if (this.pos.y < 0) {
       // Bonus lost

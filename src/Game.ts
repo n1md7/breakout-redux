@@ -12,16 +12,20 @@ import { Bonus } from '/src/components/Bonus';
 import { emitter } from '/src/utils/Emitter';
 import { BonusType } from '/src/enums/bonus';
 import { Bonuses } from '/src/constants/bonus';
+import { BonusCommand } from '/src/command/BonusCommand';
 
+L.setShowWatermark(Debug.enabled());
 Debug.disabled() && L.setDebugKey(-1);
 
 export class Game {
-  private paddle: Paddle | null = null;
-  private ball: Ball | null = null;
-  private bricks: Brick[] = [];
-  private walls: Wall[] = [];
+  public paddle: Paddle | null = null;
+  public balls: Ball[] = [];
+  public bricks: Brick[] = [];
+  public lives = 3;
+  public floor: Wall | null = null;
 
-  private readonly score: Score;
+  public readonly score: Score;
+  private readonly bonusCommand: BonusCommand;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -33,6 +37,7 @@ export class Game {
     this.onBrickDestroyed = this.onBrickDestroyed.bind(this);
 
     this.score = new Score(0);
+    this.bonusCommand = new BonusCommand(this);
   }
 
   run() {
@@ -50,28 +55,39 @@ export class Game {
       }
     }
 
+    setTimeout(() => {
+      for (const brick of this.bricks) {
+        brick.pos.y -= 1;
+      }
+    }, 5000);
+
     L.setCameraPos(LevelSize.scale(0.5));
 
     this.paddle = new Paddle(LevelSize);
-    this.ball = new Ball(L.cameraPos, this.score);
-    this.walls = [
-      new Wall(L.vec2(-0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y)),
-      new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y)),
-      new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1)),
-      new Wall(L.vec2(LevelSize.x * 0.5, 0), L.vec2(LevelSize.x + 2, 1)),
-    ];
-
-    new Bonus(L.vec2(10, LevelSize.y - 2), BonusType.Wall);
+    this.balls.push(new Ball(L.cameraPos));
+    new Wall(L.vec2(-0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
+    new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
+    new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
   }
 
   private update() {
     L.drawRect(cameraPos, L.vec2(100, 100), new L.Color().setHex('#494746'));
     L.drawRect(cameraPos, LevelSize, new L.Color().setHex('#ce9a80'));
 
-    if (!this.ball || this.ball.pos.y < -1) {
-      this.ball?.destroy();
-      this.ball = new Ball(L.cameraPos);
+    for (const ball of this.balls) {
+      if (ball.destroyed) continue;
+
+      if (ball.pos.y < -1) {
+        ball.destroy();
+        if (this.balls.length === 0) this.lives--;
+        if (this.lives <= 0) {
+          return console.log('Game over');
+        }
+        this.balls.push(new Ball(L.cameraPos));
+      }
     }
+
+    this.balls = this.balls.filter((brick) => !brick.destroyed);
   }
 
   private postUpdate() {}
@@ -84,11 +100,12 @@ export class Game {
 
   private onBonusCollected(type: BonusType) {
     console.log('Bonus collected', type);
+    this.bonusCommand.execute(type);
   }
 
   private onBrickDestroyed(score: number) {
     this.score.add(score);
-    if (this.score.toValue() % 5 === 0) {
+    if (this.score.toValue() % 1 === 0) {
       const type = Bonuses[L.randInt(0, Bonuses.length - 1)];
       const position = L.vec2(L.randInt(2, LevelSize.x - 2), LevelSize.y - 2);
       new Bonus(position, type);

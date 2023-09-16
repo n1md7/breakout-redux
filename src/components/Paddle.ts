@@ -15,4 +15,16 @@ export class Paddle extends L.EngineObject {
     const max = this.levelSize.x - min;
     this.pos.x = L.clamp(L.mousePos.x, min, max);
   }
+
+  increaseSize() {
+    this.size.x += 2;
+  }
+
+  decreaseSize() {
+    this.size.x -= 2;
+  }
+
+  resetSize() {
+    this.size.x = 6;
+  }
 }
