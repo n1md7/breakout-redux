@@ -7,8 +7,10 @@ import { LevelSize } from '/src/constants/level';
 import { Brick } from '/src/components/Brick';
 import { Score } from '/src/ui/Score';
 import Tilemap from '/src/assets/bricks/tiles.png';
+import { Debug } from '/src/utils/Debug';
 
-console.log(Tilemap);
+Debug.disabled() && L.setDebugKey(-1);
+
 export class Game {
   private paddle: Paddle | null = null;
   private ball: Ball | null = null;
@@ -66,6 +68,6 @@ export class Game {
   private render() {}
 
   private postRender() {
-    L.drawTextScreen(`Score: ${this.score.toString()}`, L.vec2(L.mainCanvasSize.x * 0.5, 70), 40, new L.Color(1, 1, 1));
+    L.drawTextScreen(`Score: ${this.score.toString()}`, L.vec2(L.mainCanvasSize.x * 0.5, 70), 24, new L.Color(1, 1, 1));
   }
 }

@@ -14,16 +14,16 @@ export const Tiles: [number, number][] = [
 ];
 
 export const Colors = [
-  new L.Color().setHex('#2D8303CC'), // Green
-  new L.Color().setHex('#5B9E0DCC'), // Light Green
-  new L.Color().setHex('#F2E205CC'), // Yellow
-  new L.Color().setHex('#F21905CC'), // Red
-  new L.Color().setHex('#F205A0CC'), // Purple
-  new L.Color().setHex('#0564F2CC'), // Blue
-  new L.Color().setHex('#05F2E2CC'), // Light Blue
-  new L.Color().setHex('#A0A0A0CC'), // Grey
-  new L.Color().setHex('#F28C05CC'), // Orange
-  new L.Color().setHex('#A05F05CC'), // Brown
+  new L.Color().setHex('#00854A'), // Green
+  new L.Color().setHex('#8CC63F'), // Light Green
+  new L.Color().setHex('#FFDD00'), // Yellow
+  new L.Color().setHex('#ED1B25'), // Red
+  new L.Color().setHex('#91278F'), // Purple
+  new L.Color().setHex('#005AAB'), // Blue
+  new L.Color().setHex('#00AAE5'), // Light Blue
+  new L.Color().setHex('#486370'), // Grey
+  new L.Color().setHex('#F7931F'), // Orange
+  new L.Color().setHex('#744C1F'), // Brown
 ];
 
 // Guard against mistakes

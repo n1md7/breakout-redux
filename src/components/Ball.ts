@@ -14,13 +14,13 @@ export class Ball extends L.EngineObject {
     this.score = score;
     this.velocity = L.vec2(-0.1, -0.1);
     this.setCollision(true);
-    // this.mass = 0.1;
     this.elasticity = 1;
   }
 
   override collideWithObject(object: L.EngineObject): boolean {
     if (object instanceof Brick) {
       const { color } = object;
+      // this.color = color; // Change the color of the ball to the color of the brick
       Sounds.BrickHit.play(this.pos);
       object.increaseHitCount();
       if (object.shallBeDestroyed()) {
