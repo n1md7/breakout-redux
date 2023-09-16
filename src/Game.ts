@@ -77,17 +77,18 @@ export class Game {
     for (const ball of this.balls) {
       if (ball.destroyed) continue;
 
-      if (ball.pos.y < -1) {
-        ball.destroy();
-        if (this.balls.length === 0) this.lives--;
-        if (this.lives <= 0) {
-          return console.log('Game over');
-        }
-        this.balls.push(new Ball(L.cameraPos));
-      }
+      if (ball.pos.y < -1) ball.destroy();
     }
 
     this.balls = this.balls.filter((brick) => !brick.destroyed);
+
+    if (this.balls.length === 0) {
+      if (--this.lives <= 0) {
+        return console.log('Game over');
+      } else {
+        this.balls.push(new Ball(L.cameraPos));
+      }
+    }
   }
 
   private postUpdate() {}
