@@ -20,7 +20,8 @@
     "allowJs": true,
     "checkJs": true,
     "paths": {
-      "/src/*": ["src/*"]
+      "/src/*": ["src/*"],
+      "/public/*": ["public/*"],
     }
   },
   "include": ["src", "tests", "src/**/*.d.ts"],

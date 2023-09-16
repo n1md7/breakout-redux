@@ -30,7 +30,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           index: 'index.html',
-          about: 'about.html',
         },
       },
     },

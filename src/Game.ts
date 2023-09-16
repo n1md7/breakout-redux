@@ -6,7 +6,9 @@ import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';
 import { Brick } from '/src/components/Brick';
 import { Score } from '/src/ui/Score';
+import Tilemap from '/src/assets/bricks/tiles.png';
 
+console.log(Tilemap);
 export class Game {
   private paddle: Paddle | null = null;
   private ball: Ball | null = null;
@@ -26,7 +28,7 @@ export class Game {
   }
 
   run() {
-    L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender);
+    L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
   }
 
   private init() {

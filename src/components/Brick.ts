@@ -1,31 +1,30 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
-import { Colors } from '/src/constants/color';
+import { Colors, Tiles } from '/src/constants/color';
 
 export class Brick extends L.EngineObject {
-  private strength = 1;
   private hitCount = 0;
+  private readonly tiles: [number, number];
+  private readonly strength = 1;
+  private readonly index: number = 0;
 
   constructor(position: L.Vector2, size: L.Vector2 = L.vec2(2, 1)) {
     super(position, size);
 
     this.setCollision(true);
     this.mass = 0;
-    this.strength = this.getStrength();
-    this.color = this.getColor();
+    this.index = L.randInt(0, Colors.length);
+    this.tiles = this.getTileByIndex(this.index);
+    this.color = this.getColorByIndex(this.index);
+    this.tileIndex = this.tiles[this.hitCount];
+    this.tileSize = L.vec2(384, 128);
   }
 
-  private getStrength() {
-    const chance = L.randInt(0, 100);
-    if (chance < 80) return 1;
-    if (chance < 90) return 2;
-    if (chance < 95) return 3;
-    if (chance < 98) return 4;
-
-    return 5;
+  private getColorByIndex(index: number) {
+    return Colors[index];
   }
 
-  private getColor() {
-    return Colors[Math.max(this.strength - this.hitCount - 1, 0)];
+  private getTileByIndex(index: number): [number, number] {
+    return Tiles[index];
   }
 
   get score(): number {
@@ -33,11 +32,10 @@ export class Brick extends L.EngineObject {
   }
 
   increaseHitCount(): void {
-    this.hitCount++;
-    this.color = this.getColor();
+    this.tileIndex = this.tiles[++this.hitCount];
   }
 
   shallBeDestroyed(): boolean {
-    return this.hitCount === this.strength;
+    return this.hitCount > this.strength;
   }
 }
