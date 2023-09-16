@@ -16,17 +16,16 @@ export class Brick extends L.EngineObject {
 
   private getStrength() {
     const chance = L.randInt(0, 100);
-    if (chance < 70) return 1;
-    if (chance < 80) return 2;
-    if (chance < 90) return 3;
-    if (chance < 95) return 4;
-    if (chance < 98) return 5;
+    if (chance < 80) return 1;
+    if (chance < 90) return 2;
+    if (chance < 95) return 3;
+    if (chance < 98) return 4;
 
-    return 6;
+    return 5;
   }
 
   private getColor() {
-    return Colors[this.strength - this.hitCount - 1];
+    return Colors[Math.max(this.strength - this.hitCount - 1, 0)];
   }
 
   get score(): number {
@@ -38,11 +37,7 @@ export class Brick extends L.EngineObject {
     this.color = this.getColor();
   }
 
-  evaluateAndDestroy(): boolean {
-    if (this.hitCount === this.strength) {
-      this.destroy();
-      return true;
-    }
-    return false;
+  shallBeDestroyed(): boolean {
+    return this.hitCount === this.strength;
   }
 }
