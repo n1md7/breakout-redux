@@ -13,8 +13,8 @@ export class Balls {
     this.balls = new LinkedList();
     // Choose a number between -0.5 and 0.5 with a 50% chance.
     this.picker = new RandomPicker([
-      [-0.5, 0.5],
-      [0.5, 0.5],
+      [-0.5, 50],
+      [0.5, 50],
     ]);
   }
 

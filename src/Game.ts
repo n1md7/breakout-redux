@@ -66,16 +66,9 @@ export class Game {
   private init() {
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
 
-    // TODO add using array for each level
-    // for (let x = 2; x <= LevelSize.x - 2; x += 2) {
-    //   for (let y = 12; y <= LevelSize.y - 2; y++) {
-    //     this.bricks.push(new Brick(L.vec2(x, y)));
-    //   }
-    // }
-
-    const level = Levels[1];
-    const offsetX = 2;
-    const offsetY = 14;
+    const level = Levels[7];
+    const offsetX = 0;
+    const offsetY = 10;
     const blockWidth = 2;
     const blockHeight = 1;
     for (const [y, row] of level.entries()) {
@@ -97,7 +90,7 @@ export class Game {
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
 
     this.startedAt = L.time;
-    this.modeCommand.execute(GameMode.Classic);
+    this.modeCommand.execute(GameMode.Modern);
   }
 
   private update() {

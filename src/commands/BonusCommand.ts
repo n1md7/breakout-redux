@@ -26,6 +26,7 @@ export class BonusCommand {
       [BonusType.ExtraWall]: new ExtraWall(game),
       [BonusType.DoubleBalls]: new DoubleBalls(game),
       [BonusType.TripleBalls]: new TripleBalls(game),
+      [BonusType.ExtraStrength]: new ExtraBalls(game),
     };
   }
 

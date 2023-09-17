@@ -7,4 +7,5 @@ export enum BonusType {
   PaddleDecrease,
   DoubleBalls,
   TripleBalls,
+  ExtraStrength,
 }

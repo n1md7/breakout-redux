@@ -19,7 +19,7 @@ export class RandomPicker<TargetValue = unknown> {
     let cumulativeProbability = 0;
 
     for (const [target, probability] of this.probabilities) {
-      cumulativeProbability += probability;
+      cumulativeProbability += probability / 100;
 
       if (randomValue <= cumulativeProbability) {
         return target;
@@ -40,8 +40,8 @@ export class RandomPicker<TargetValue = unknown> {
     if (this.probabilities.length === 0) throw new Error('Probabilities should not be empty.');
 
     const probabilitySum = this.probabilities.reduce((acc, [, prob]) => acc + prob, 0);
-    if (probabilitySum !== 1) {
-      throw new Error(`Probabilities should sum up to 1. Sum is ${probabilitySum}.`);
+    if (probabilitySum !== 100) {
+      throw new Error(`Probabilities should sum up to 100. Sum is ${probabilitySum}.`);
     }
   }
 }

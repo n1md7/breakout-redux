@@ -16,8 +16,8 @@ export abstract class Brick extends L.EngineObject {
     super(position, size);
 
     this.picker = new RandomPicker<Strength>([
-      [BrickType.Normal, 0.7], // 70% chance of being a weak brick
-      [BrickType.Hard, 0.3], // 30% chance of being a strong brick
+      [BrickType.Normal, 70], // 70% chance of being a weak brick
+      [BrickType.Hard, 30], // 30% chance of being a strong brick
     ]);
     this.mass = 0;
     this.angle = 0;

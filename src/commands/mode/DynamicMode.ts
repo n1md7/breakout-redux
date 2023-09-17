@@ -3,6 +3,7 @@ import * as TWEEN from '@tweenjs/tween.js';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LinkedList } from '/src/data-structures/LinkedList';
 import { Game } from '/src/Game';
+import { BonusType } from '/src/enums/bonus';
 
 export class DynamicMode extends Mode {
   public readonly displayName = 'Dynamic';
@@ -11,6 +12,13 @@ export class DynamicMode extends Mode {
 
   constructor(game: Game) {
     super(game);
+
+    this.bonusPicker.setProbabilities([
+      [BonusType.ExtraScore, 20],
+      [BonusType.ExtraStrength, 20],
+      [BonusType.PaddleIncrease, 20],
+      [BonusType.PaddleDecrease, 40],
+    ]);
   }
 
   apply(): void {

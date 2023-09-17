@@ -21,6 +21,7 @@ export class Paddle extends L.EngineObject {
 
   decreaseSize() {
     this.size.x -= 2;
+    if (this.size.x < 2) this.size.x = 2;
   }
 
   resetSize() {
