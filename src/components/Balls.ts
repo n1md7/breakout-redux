@@ -4,6 +4,7 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { RandomPicker } from '/src/components/utils/RandomPicker';
 
 export class Balls {
+  private readonly MAX_BALLS = 200;
   private readonly balls: LinkedList<Ball>;
   private readonly picker: RandomPicker<number>;
   private strength: number = 1;
@@ -30,9 +31,11 @@ export class Balls {
   }
 
   spawnOneAt(position = L.cameraPos) {
-    const x = this.picker.pick();
-    const y = this.picker.pick();
-    this.add(new Ball(L.vec2(position.x + x, position.y + y), this.strength));
+    if (this.balls.getLength() < this.MAX_BALLS) {
+      const x = this.picker.pick();
+      const y = this.picker.pick();
+      this.add(new Ball(L.vec2(position.x + x, position.y + y), this.strength));
+    }
   }
 
   spawnManyAt(position = L.cameraPos, count = 1) {

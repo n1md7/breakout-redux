@@ -40,7 +40,6 @@ export class Ball extends L.EngineObject {
     const { color } = brick; // Copy the color of the brick, down below it changes
     // this.color = color; // Change the color of the ball to the color of the brick
     Sounds.BrickHit.play(this.pos);
-    console.info('Brick hit', brick.getStrength(), this.strength.getValue());
     brick.increaseHitCount();
     if (brick.shallBeDestroyed()) {
       Particles.BallDestroy(this.pos, color);

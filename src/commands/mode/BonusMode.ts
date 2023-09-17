@@ -13,10 +13,10 @@ export class BonusMode extends Mode {
     super(game);
 
     this.bonusPicker.setProbabilities([
-      [BonusType.DoubleBalls, 0.2],
-      [BonusType.TripleBalls, 0.2],
-      [BonusType.ExtraBalls, 0.2],
-      [BonusType.ExtraScore, 0.2],
+      [BonusType.DoubleBalls, 0.1],
+      [BonusType.TripleBalls, 0.1],
+      [BonusType.ExtraBalls, 0.3],
+      [BonusType.ExtraScore, 0.3],
       [BonusType.ExtraWall, 0.2],
     ]);
   }

@@ -15,7 +15,6 @@ import { Lives } from '/src/components/utils/Lives';
 import { Balls } from '/src/components/Balls';
 import { ModeCommand } from '/src/commands/ModeCommand';
 import { GameMode } from '/src/enums/mode';
-import { RandomPicker } from '/src/components/utils/RandomPicker';
 
 L.setShowWatermark(Debug.enabled());
 Debug.disabled() && L.setDebugKey(-1);
