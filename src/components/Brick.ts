@@ -2,9 +2,9 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { Colors, Tiles } from '/src/constants/color';
 
 export class Brick extends L.EngineObject {
+  public readonly strength: 1 | 2 = 1;
   private hitCount = 0;
   private readonly tiles: [number, number];
-  private readonly strength: 1 | 0 = 0;
   private readonly index: number = 0;
 
   constructor(position: L.Vector2, size: L.Vector2 = L.vec2(2, 1)) {
@@ -13,7 +13,7 @@ export class Brick extends L.EngineObject {
     this.setCollision(true);
     this.mass = 0;
     // 20% chance of being a strong brick
-    this.strength = L.randInt(0, 10) > 7 ? 1 : 0;
+    this.strength = L.randInt(0, 10) > 7 ? 2 : 1;
     this.index = L.randInt(0, Colors.length);
     this.tiles = this.getTileByIndex(this.index);
     this.color = this.getColorByIndex(this.index);
@@ -31,7 +31,7 @@ export class Brick extends L.EngineObject {
   }
 
   get score(): number {
-    return this.strength + 1;
+    return this.strength;
   }
 
   increaseHitCount(): void {
@@ -40,6 +40,6 @@ export class Brick extends L.EngineObject {
   }
 
   shallBeDestroyed(): boolean {
-    return this.hitCount > this.strength;
+    return this.hitCount >= this.strength;
   }
 }

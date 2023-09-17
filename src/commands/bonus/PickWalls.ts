@@ -1,5 +1,5 @@
 import { Game } from '/src/Game';
-import { Bonus } from '/src/command/Bonus';
+import { Bonus } from '/src/commands/bonus/Bonus';
 import { Wall } from '/src/components/Wall';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';

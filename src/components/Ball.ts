@@ -4,8 +4,11 @@ import { Sounds } from '/src/constants/sound';
 import { Particles } from '/src/constants/particle';
 import { Paddle } from '/src/components/Paddle';
 import { emitter } from '/src/utils/Emitter';
+import { Strength } from '/src/components/utils/Strength';
 
 export class Ball extends L.EngineObject {
+  private readonly strength = new Strength(9);
+
   constructor(position: L.Vector2) {
     super(position, L.vec2(0.5));
 
@@ -20,8 +23,10 @@ export class Ball extends L.EngineObject {
     const isPaddle = object instanceof Paddle;
 
     if (isBrick) {
+      console.log(this.strength, object.strength);
+      this.strength.decrement();
       const { color } = object;
-      this.color = color; // Change the color of the ball to the color of the brick
+      // this.color = color; // Change the color of the ball to the color of the brick
       Sounds.BrickHit.play(this.pos);
       object.increaseHitCount();
       if (object.shallBeDestroyed()) {
@@ -32,15 +37,16 @@ export class Ball extends L.EngineObject {
       } else {
         Particles.BrickHit(this.pos, color);
       }
-    } else {
-      if (isBrick || isPaddle) {
-        // Accelerate the sound based on the velocity
-        const pitch = this.velocity.length() + 0.5;
-        Sounds.BallBounce.play(this.pos, 1, pitch);
-      }
+      // It will not bounce off but will destroy more bricks as it goes through
+      if (this.strength.hasValue()) return false;
     }
 
     if (isPaddle) {
+      this.strength.restore();
+      // Accelerate the sound based on the velocity
+      const pitch = this.velocity.length() + 0.5;
+      Sounds.BallBounce.play(this.pos, 1, pitch);
+
       const deltaX = this.pos.x - object.pos.x;
       this.velocity = this.velocity.rotate(deltaX * 0.3);
       this.velocity.y = L.max(this.velocity.y, 0.3);
@@ -56,6 +62,7 @@ export class Ball extends L.EngineObject {
 
   override update() {
     this.angleVelocity = this.velocity.length() * 10;
+    this.color = this.strength.getColor();
     return super.update();
   }
 }

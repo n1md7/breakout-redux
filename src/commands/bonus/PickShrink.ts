@@ -1,13 +1,13 @@
-import { Bonus } from '/src/command/Bonus';
+import { Bonus } from '/src/commands/bonus/Bonus';
 import { Game } from '/src/Game';
 
-export class PickPaddle extends Bonus {
+export class PickShrink extends Bonus {
   constructor(game: Game) {
     super(game);
   }
 
   apply() {
-    this.game.paddle?.increaseSize();
+    this.game.paddle?.decreaseSize();
     setTimeout(() => {
       this.game.paddle?.resetSize();
     }, this.timeout);

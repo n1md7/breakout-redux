@@ -1,4 +1,4 @@
-import { Bonus } from '/src/command/Bonus';
+import { Bonus } from '/src/commands/bonus/Bonus';
 import { Game } from '/src/Game';
 
 export class PickStars extends Bonus {
