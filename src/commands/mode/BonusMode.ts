@@ -6,6 +6,7 @@ import L from 'littlejsengine/build/littlejs.esm';
 import { BonusType } from '/src/enums/bonus';
 
 export class BonusMode extends Mode {
+  public readonly displayName = 'Bonus';
   private readonly timeout = 3_000;
   private readonly tweens: LinkedList<TWEEN.Tween<L.Vector2>> = new LinkedList();
 
@@ -29,8 +30,8 @@ export class BonusMode extends Mode {
       setInterval(() => {
         for (const brick of this.game.bricks) {
           const tween = new TWEEN.Tween(brick.pos);
-          tween.to({ y: brick.pos.y - 1 }, 500);
-          tween.easing(TWEEN.Easing.Back.InOut);
+          tween.to({ y: brick.pos.y - 1 }, 900);
+          tween.easing(TWEEN.Easing.Bounce.Out);
           tween.start();
           this.tweens.add(tween);
         }

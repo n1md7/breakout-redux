@@ -8,10 +8,13 @@ export const Tiles: [number, number][] = [
   [15, 20], // Purple
   [17, 0], // Blue
   [26, 21], // Light Blue
-  [22, 25], // Grey
   [2, 27], // Orange
   [31, 30], // Brown
+  // [22, 25], // Grey, reserved for unbreakable bricks
 ];
+
+export const UnbreakableTileIndex = 22;
+export const UnbreakableTileColor = new L.Color().setHex('#486370');
 
 export const Colors = [
   new L.Color().setHex('#00854A'), // Green
@@ -21,7 +24,7 @@ export const Colors = [
   new L.Color().setHex('#91278F'), // Purple
   new L.Color().setHex('#005AAB'), // Blue
   new L.Color().setHex('#00AAE5'), // Light Blue
-  new L.Color().setHex('#486370'), // Grey
+  // new L.Color().setHex('#486370'), // Grey, reserved for unbreakable bricks
   new L.Color().setHex('#F7931F'), // Orange
   new L.Color().setHex('#744C1F'), // Brown
 ];

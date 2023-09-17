@@ -2,7 +2,6 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { Paddle } from '/src/components/Paddle';
 import { Wall } from '/src/components/Wall';
 import { LevelSize } from '/src/constants/level';
-import { Brick } from '/src/components/Brick';
 import { Score } from '/src/ui/Score';
 import Tilemap from '/src/assets/bricks/tiles.png';
 import { Debug } from '/src/utils/Debug';
@@ -15,6 +14,11 @@ import { Lives } from '/src/components/utils/Lives';
 import { Balls } from '/src/components/Balls';
 import { ModeCommand } from '/src/commands/ModeCommand';
 import { GameMode } from '/src/enums/mode';
+import { Levels } from '/src/commands/stage/Levels';
+import { BrickType } from '/src/enums/brick';
+import { Brick } from '/src/components/brick/Brick';
+import { BrickBreakable } from '/src/components/brick/BrickBreakable';
+import { BrickUnbreakable } from '/src/components/brick/BrickUnbreakable';
 
 L.setShowWatermark(Debug.enabled());
 Debug.disabled() && L.setDebugKey(-1);
@@ -32,9 +36,9 @@ export class Game {
   public readonly levelTime: number = 90; // seconds
   public readonly lives: Lives;
   public readonly score: Score;
+  public readonly modeCommand: ModeCommand;
   private readonly bonusCommand: BonusCommand;
   private readonly stageCommand: StageCommand;
-  private readonly modeCommand: ModeCommand;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -63,9 +67,25 @@ export class Game {
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
 
     // TODO add using array for each level
-    for (let x = 2; x <= LevelSize.x - 2; x += 2) {
-      for (let y = 12; y <= LevelSize.y - 2; y++) {
-        this.bricks.push(new Brick(L.vec2(x, y)));
+    // for (let x = 2; x <= LevelSize.x - 2; x += 2) {
+    //   for (let y = 12; y <= LevelSize.y - 2; y++) {
+    //     this.bricks.push(new Brick(L.vec2(x, y)));
+    //   }
+    // }
+
+    const level = Levels[1];
+    const offsetX = 2;
+    const offsetY = 14;
+    const blockWidth = 2;
+    const blockHeight = 1;
+    for (const [y, row] of level.entries()) {
+      for (const [x, type] of row.entries()) {
+        if (type === BrickType.Empty) continue;
+        const position = L.vec2(x * blockWidth + offsetX, y * blockHeight + offsetY);
+        if (type === BrickType.Unbreakable) this.bricks.push(new BrickUnbreakable(position));
+        if ([BrickType.Normal, BrickType.Hard].includes(type)) {
+          this.bricks.push(new BrickBreakable(position));
+        }
       }
     }
 
@@ -77,7 +97,7 @@ export class Game {
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
 
     this.startedAt = L.time;
-    this.modeCommand.execute(GameMode.Bonus);
+    this.modeCommand.execute(GameMode.Classic);
   }
 
   private update() {

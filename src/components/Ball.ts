@@ -1,5 +1,5 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
-import { Brick } from '/src/components/Brick';
+import { Brick } from '/src/components/brick/Brick';
 import { Sounds } from '/src/constants/sound';
 import { Particles } from '/src/constants/particle';
 import { Paddle } from '/src/components/Paddle';

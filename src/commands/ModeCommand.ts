@@ -20,6 +20,10 @@ export class ModeCommand {
     this.currentMode = this.modes[GameMode.Classic];
   }
 
+  get current() {
+    return this.currentMode;
+  }
+
   execute(mode: GameMode) {
     this.clearTimers();
     this.currentMode = this.modes[mode];

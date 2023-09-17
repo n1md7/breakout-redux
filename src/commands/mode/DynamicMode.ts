@@ -5,6 +5,7 @@ import { LinkedList } from '/src/data-structures/LinkedList';
 import { Game } from '/src/Game';
 
 export class DynamicMode extends Mode {
+  public readonly displayName = 'Dynamic';
   private readonly timeout = 10_000;
   private readonly tweens: LinkedList<TWEEN.Tween<L.Vector2>> = new LinkedList();
 

@@ -33,6 +33,7 @@ export class StageCommand {
       `Score: ${String(this.game.score.toValue()).padStart(4, '0')}`,
       `Lives: ${String(this.game.lives.getValue()).padStart(2, '0')}`,
       `Time-Left: ${String(this.game.timeLeft).padStart(3, '0')}`,
+      `Mode: ${this.game.modeCommand.current.displayName}`,
       `High-Score: ${String(this.game.score.getHighScore()).padStart(5, '0')}`,
     ];
     new L.FontImage().drawText(navTextValues.join(' | '), L.vec2(LevelSize.x * 0.5, LevelSize.y + 0.5), 0.07, true);

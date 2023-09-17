@@ -3,6 +3,7 @@ import { RandomPicker } from '/src/components/utils/RandomPicker';
 import { BonusType } from '/src/enums/bonus';
 
 export abstract class Mode {
+  public abstract readonly displayName: string;
   protected readonly bonusPicker: RandomPicker<BonusType> = new RandomPicker();
 
   protected timers: NodeJS.Timeout[] = [];
