@@ -1,14 +1,14 @@
-import { Bonus } from '/src/commands/bonus/Bonus';
+import { BonusType } from '/src/commands/bonus/BonusType';
 import { Game } from '/src/Game';
 import { Ball } from '/src/components/Ball';
 import L from 'littlejsengine/build/littlejs.esm';
 
-export class PickLife extends Bonus {
+export class ExtraLife extends BonusType {
   constructor(game: Game) {
     super(game);
   }
 
   apply() {
-    this.game.lives++;
+    this.game.lives.increment();
   }
 }

@@ -1,8 +1,10 @@
 export enum BonusType {
-  Stars,
-  Balls,
-  Paddle,
-  Life,
-  Wall,
-  Shrink,
+  ExtraScore,
+  ExtraBalls,
+  PaddleIncrease,
+  ExtraLife,
+  ExtraWall,
+  PaddleDecrease,
+  DoubleBalls,
+  TripleBalls,
 }

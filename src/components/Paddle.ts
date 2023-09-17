@@ -1,9 +1,8 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
-import { boolean } from 'yup';
 
 export class Paddle extends L.EngineObject {
   constructor(private readonly levelSize: L.Vector2) {
-    super(L.vec2(0, 1), L.vec2(6, 0.5));
+    super(L.vec2(0, 1), L.vec2(4, 0.5));
     this.color = new L.Color(1, 1, 1, 0.5);
 
     this.setCollision(true);
@@ -25,6 +24,6 @@ export class Paddle extends L.EngineObject {
   }
 
   resetSize() {
-    this.size.x = 6;
+    this.size.x = 4;
   }
 }

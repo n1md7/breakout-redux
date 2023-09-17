@@ -25,6 +25,7 @@
     "husky": "husky install"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^21.0.0",
     "lil-gui": "^0.18.2",
     "littlejsengine": "^1.6.4",
     "tiny-emitter": "^2.1.0",

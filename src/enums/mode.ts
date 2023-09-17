@@ -1,4 +1,4 @@
-export enum Mode {
+export enum EnvMode {
   development = 'development',
   production = 'production',
   githubPages = 'github',
@@ -6,4 +6,11 @@ export enum Mode {
   itchIo = 'itch',
   unitTest = 'test',
   e2eTest = 'e2e',
+}
+
+export enum GameMode {
+  Classic,
+  Dynamic,
+  Modern,
+  Bonus,
 }

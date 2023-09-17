@@ -1,7 +1,7 @@
-import { Bonus } from '/src/commands/bonus/Bonus';
+import { BonusType } from '/src/commands/bonus/BonusType';
 import { Game } from '/src/Game';
 
-export class PickStars extends Bonus {
+export class ExtraScore extends BonusType {
   constructor(game: Game) {
     super(game);
   }
