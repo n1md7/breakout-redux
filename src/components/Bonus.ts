@@ -1,5 +1,5 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
-import { Colors, Tiles } from '/src/constants/color';
+import { Colors } from '/src/constants/color';
 import { Paddle } from '/src/components/Paddle';
 import { emitter } from '/src/utils/Emitter';
 import { BonusType } from '/src/enums/bonus';
@@ -20,7 +20,7 @@ export class Bonus extends L.EngineObject {
   }
 
   override update() {
-    this.angle += this.sign;
+    this.angle += this.sign * 0.3;
 
     if (this.pos.y < 0) {
       // Bonus lost

@@ -10,6 +10,7 @@ export class ClassicMode extends Mode {
 
   apply(): void {
     console.info('Classic mode activated');
+    if (this.game.bricks.length === 0) throw new Error('No bricks iterate');
     this.game.bricks.forEach((brick) => {
       // One hit to destroy
       brick.setStrength(1);

@@ -58,14 +58,17 @@ export class Game {
   }
 
   run(mode: GameMode, stage: number) {
-    this.modeCommand.execute(mode);
     this.stageCommand.execute(stage);
+    this.modeCommand.execute(mode);
     L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
     emitter.on('bonusCollected', this.onBonusCollected);
     emitter.on('brickDestroyed', this.onBrickDestroyed);
   }
 
   private init() {
+    // Show the wall initially, to make sure the user won't lose instantly
+    this.bonusCommand.collect(BonusType.ExtraWall);
+
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
     L.setCameraPos(LevelSize.scale(0.5));
 

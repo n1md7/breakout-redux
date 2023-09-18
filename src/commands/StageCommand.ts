@@ -87,6 +87,7 @@ export class StageCommand {
   restart() {
     this.reset();
     this.populateBlocks();
+    this.game.modeCommand.current.apply();
   }
 
   pause() {

@@ -28,6 +28,7 @@ export abstract class Brick extends L.EngineObject {
     this.color = this.getColorByIndex(this.index);
     this.tileIndex = this.tiles[this.hitCount];
     this.tileSize = L.vec2(384, 128);
+    this.renderOrder = -1;
   }
 
   get score(): number {
