@@ -15,8 +15,47 @@
     <meta name="twitter:description" content="Breakout game made in LittleJS" />
     <title>"Breakout"</title>
     
-    <script type="module" crossorigin src="./index-340fb836.js"></script>
-    <link rel="stylesheet" href="./index-01a0a809.css">
+    <script type="module" crossorigin src="./index-137e0931.js"></script>
+    <link rel="stylesheet" href="./index-258732c0.css">
   </head>
-  <body></body>
+  <body>
+  <dialog id="lobby">
+    <h3>Brick breaker</h3>
+    <form>
+      <div class="modes">
+        <p>
+          <label>
+            Game Mode:
+            <select>
+              <option value="0">Classic</option>
+              <option value="1">Dynamic</option>
+              <option value="2" selected>Modern</option>
+            </select>
+          </label>
+        </p>
+      </div>
+      <div class="levels">
+        <h4>Select Level</h4>
+        <button class="block selected" value="1">01</button>
+        <button class="block" value="2">02</button>
+        <button class="block" value="3">03</button>
+        <button class="block" value="4">04</button>
+        <button class="block" value="5">05</button>
+        <button class="block" value="6">06</button>
+        <button class="block" value="7">07</button>
+        <button class="block" value="8">08</button>
+        <button class="block" value="9">09</button>
+        <button class="block" value="10">10</button>
+        <button class="block" value="11">11</button>
+        <button class="block" value="12">12</button>
+
+      </div>
+      <hr>
+      <div class="actions">
+        <button id="start">Start</button>
+      </div>
+    </form>
+  </dialog>
+
+  </body>
 </html>
