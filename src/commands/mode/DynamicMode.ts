@@ -2,7 +2,7 @@ import { Mode } from '/src/commands/mode/Mode';
 import * as TWEEN from '@tweenjs/tween.js';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LinkedList } from '/src/data-structures/LinkedList';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { BonusType } from '/src/enums/bonus';
 
 export class DynamicMode extends Mode {

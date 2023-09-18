@@ -1,4 +1,4 @@
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';
@@ -70,6 +70,12 @@ export class StageCommand {
       `High-Score: ${String(this.game.score.getHighScore()).padStart(5, '0')}`,
     ];
     new L.FontImage().drawText(navTextValues.join(' | '), L.vec2(LevelSize.x * 0.5, LevelSize.y + 0.5), 0.07, true);
+  }
+
+  execute(level: number) {
+    this.index = level;
+    this.currentLevel = this.levels[this.index];
+    this.restart();
   }
 
   activateNext() {

@@ -1,5 +1,5 @@
 import { Mode } from '/src/commands/mode/Mode';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { BonusType } from '/src/enums/bonus';
 
 export class ModernMode extends Mode {

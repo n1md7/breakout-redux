@@ -1,5 +1,5 @@
 import { BonusType } from '/src/commands/bonus/BonusType';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 
 export class PaddleDecrease extends BonusType {
   constructor(game: Game) {

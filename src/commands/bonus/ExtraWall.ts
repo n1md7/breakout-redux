@@ -1,4 +1,4 @@
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { BonusType } from '/src/commands/bonus/BonusType';
 import { Wall } from '/src/components/Wall';
 import * as L from 'littlejsengine/build/littlejs.esm';

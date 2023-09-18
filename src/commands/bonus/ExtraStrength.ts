@@ -1,5 +1,5 @@
 import { BonusType } from '/src/commands/bonus/BonusType';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import * as L from 'littlejsengine/build/littlejs.esm';
 
 export class ExtraBalls extends BonusType {

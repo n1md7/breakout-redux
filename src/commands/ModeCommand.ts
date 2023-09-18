@@ -1,4 +1,4 @@
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { GameMode } from '/src/enums/mode';
 import { DynamicMode } from '/src/commands/mode/DynamicMode';
 import { Mode } from '/src/commands/mode/Mode';

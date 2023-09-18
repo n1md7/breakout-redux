@@ -1,4 +1,4 @@
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { RandomPicker } from '/src/components/utils/RandomPicker';
 import { BonusType } from '/src/enums/bonus';
 

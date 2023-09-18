@@ -1,4 +1,4 @@
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 
 export abstract class BonusType {
   protected readonly timers: NodeJS.Timeout[] = [];

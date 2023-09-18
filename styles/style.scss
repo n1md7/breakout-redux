@@ -1,6 +1,53 @@
 $color: #494746;
 html, body {
-  background-color: $color!important;
+  background-color: $color !important;
   padding: 0;
   margin: 0;
+  user-select: none;
+}
+
+dialog#lobby {
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  text-align: center;
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+
+  .modes {
+    font-weight: bold;
+  }
+
+  .levels {
+    gap: 1em;
+    width: 50%;
+    margin: 0 auto;
+
+    .block {
+      box-sizing: border-box;
+      display: inline-block;
+      margin-top: 0.25em;
+      width: 48px;
+      font-size: 0.75em;
+      border: 1px solid #000;
+      padding: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+
+      &.selected {
+        background-color: #b94810;
+        color: #fff;
+      }
+    }
+  }
+
+  hr {
+    margin: 2em 0;
+  }
+
+  .actions {
+
+  }
+
 }

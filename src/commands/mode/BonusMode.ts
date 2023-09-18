@@ -1,5 +1,5 @@
 import { Mode } from '/src/commands/mode/Mode';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import * as TWEEN from '@tweenjs/tween.js';
 import { LinkedList } from '/src/data-structures/LinkedList';
 import L from 'littlejsengine/build/littlejs.esm';

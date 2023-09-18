@@ -1,5 +1,5 @@
 import { BonusType } from '/src/commands/bonus/BonusType';
-import { Game } from '/src/Game';
+import { Game } from '/src/game/Game';
 import { Ball } from '/src/components/Ball';
 import L from 'littlejsengine/build/littlejs.esm';
 

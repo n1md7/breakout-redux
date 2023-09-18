@@ -2,7 +2,7 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { Paddle } from '/src/components/Paddle';
 import { Wall } from '/src/components/Wall';
 import { LevelSize } from '/src/constants/level';
-import { Score } from '/src/ui/Score';
+import { Score } from '/src/game/utils/Score';
 import Tilemap from '/src/assets/bricks/tiles.png';
 import { Debug } from '/src/utils/Debug';
 import { emitter } from '/src/utils/Emitter';
@@ -57,7 +57,9 @@ export class Game {
     this.modeCommand = new ModeCommand(this);
   }
 
-  run() {
+  run(mode: GameMode, stage: number) {
+    this.modeCommand.execute(mode);
+    this.stageCommand.execute(stage);
     L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
     emitter.on('bonusCollected', this.onBonusCollected);
     emitter.on('brickDestroyed', this.onBrickDestroyed);
@@ -72,7 +74,6 @@ export class Game {
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
     this.startedAt = L.time;
-    this.modeCommand.execute(GameMode.Modern);
     this.stageCommand.restart();
   }
 
