@@ -85,6 +85,7 @@ export class Balls {
   }
 
   reset() {
+    for (const ball of this.balls) ball.destroy();
     this.balls.clear();
   }
 }

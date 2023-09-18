@@ -1,10 +1,11 @@
 export class Counter {
-  protected readonly MIN = 0;
-  protected readonly MAX = 9;
-
   protected value: number;
 
-  constructor(private readonly initialValue: number) {
+  constructor(
+    private readonly initialValue: number,
+    protected readonly MIN: number = 0,
+    protected readonly MAX: number = 9,
+  ) {
     this.value = this.apply(initialValue);
   }
 

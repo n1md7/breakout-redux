@@ -14,9 +14,9 @@ export class ModernMode extends Mode {
       [BonusType.ExtraBalls, 15],
       [BonusType.ExtraScore, 15],
       [BonusType.ExtraWall, 10],
-      [BonusType.PaddleDecrease, 20],
-      [BonusType.PaddleIncrease, 20],
-      [BonusType.ExtraStrength, 10],
+      [BonusType.ExtraStrength, 20],
+      [BonusType.PaddleDecrease, 15],
+      [BonusType.PaddleIncrease, 15],
     ]);
   }
 

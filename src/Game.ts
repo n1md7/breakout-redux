@@ -14,11 +14,9 @@ import { Lives } from '/src/components/utils/Lives';
 import { Balls } from '/src/components/Balls';
 import { ModeCommand } from '/src/commands/ModeCommand';
 import { GameMode } from '/src/enums/mode';
-import { Levels } from '/src/commands/stage/Levels';
-import { BrickType } from '/src/enums/brick';
 import { Brick } from '/src/components/brick/Brick';
 import { BrickBreakable } from '/src/components/brick/BrickBreakable';
-import { BrickUnbreakable } from '/src/components/brick/BrickUnbreakable';
+import { Counter } from '/src/components/utils/Counter';
 
 L.setShowWatermark(Debug.enabled());
 Debug.disabled() && L.setDebugKey(-1);
@@ -36,6 +34,7 @@ export class Game {
   public readonly levelTime: number = 90; // seconds
   public readonly lives: Lives;
   public readonly score: Score;
+  public readonly destroyed: Counter;
   public readonly modeCommand: ModeCommand;
   private readonly bonusCommand: BonusCommand;
   private readonly stageCommand: StageCommand;
@@ -51,6 +50,7 @@ export class Game {
 
     this.balls = new Balls();
     this.score = new Score(0);
+    this.destroyed = new Counter(0, 0, 999);
     this.lives = new Lives(3);
     this.bonusCommand = new BonusCommand(this);
     this.stageCommand = new StageCommand(this);
@@ -65,32 +65,15 @@ export class Game {
 
   private init() {
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
-
-    const level = Levels[7];
-    const offsetX = 0;
-    const offsetY = 10;
-    const blockWidth = 2;
-    const blockHeight = 1;
-    for (const [y, row] of level.entries()) {
-      for (const [x, type] of row.entries()) {
-        if (type === BrickType.Empty) continue;
-        const position = L.vec2(x * blockWidth + offsetX, y * blockHeight + offsetY);
-        if (type === BrickType.Unbreakable) this.bricks.push(new BrickUnbreakable(position));
-        if ([BrickType.Normal, BrickType.Hard].includes(type)) {
-          this.bricks.push(new BrickBreakable(position));
-        }
-      }
-    }
-
     L.setCameraPos(LevelSize.scale(0.5));
 
     this.paddle = new Paddle(LevelSize);
     new Wall(L.vec2(-0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
-
     this.startedAt = L.time;
     this.modeCommand.execute(GameMode.Modern);
+    this.stageCommand.restart();
   }
 
   private update() {
@@ -128,6 +111,11 @@ export class Game {
 
   private postUpdate() {
     this.modeCommand.update();
+    if (this.stageCommand.stageIsCleared()) {
+      console.log('winner');
+      this.stageCommand.pause();
+      this.stageCommand.activateNext();
+    }
   }
 
   private render() {
@@ -149,7 +137,7 @@ export class Game {
 
   private onBrickDestroyed(brick: Brick) {
     this.score.add(brick.score);
-
+    if (brick instanceof BrickBreakable) this.destroyed.increment();
     // No bonuses in classic mode
     if (this.modeCommand.modeIsClassic()) return;
 
@@ -161,15 +149,5 @@ export class Game {
   public get timeLeft() {
     const delta = Math.floor(L.time - this.startedAt);
     return this.levelTime - delta;
-  }
-
-  reset() {
-    this.balls.reset();
-    this.bricks.forEach((brick) => brick.destroy());
-    this.bricks = [];
-    this.lives.restore();
-    this.score.reset();
-    this.startedAt = L.time;
-    this.modeCommand.clearTimers();
   }
 }

@@ -6,7 +6,7 @@ import { LevelSize } from '/src/constants/level';
 
 export class ExtraWall extends BonusType {
   private readonly size = L.vec2(LevelSize.x, 0.25);
-  private readonly position = L.vec2(LevelSize.x * 0.5, 4);
+  private readonly position = L.vec2(LevelSize.x * 0.5, 0.35);
 
   constructor(game: Game) {
     super(game);
