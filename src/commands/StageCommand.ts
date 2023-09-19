@@ -2,40 +2,23 @@ import { Game } from '/src/game/Game';
 import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';
-import { Levels } from '/src/commands/stage/Levels';
 import { BrickType } from '/src/enums/brick';
 import { BrickUnbreakable } from '/src/components/brick/BrickUnbreakable';
 import { BrickBreakable } from '/src/components/brick/BrickBreakable';
+import { Stage } from '/src/commands/stage/Stage';
+import { stages } from '/src/commands/stage/stages';
 
-type LevelType = {
-  map: number[][];
-  bricks: number;
-};
 export class StageCommand {
   private readonly game: Game;
-  private readonly levels: LevelType[];
+  private readonly stages: Stage[];
+
   private index = 0;
-  private currentLevel: LevelType;
+  private currentStage: Stage;
 
   constructor(game: Game) {
     this.game = game;
-    this.levels = Levels.reduce((acc, map) => {
-      return [
-        ...acc,
-        {
-          map,
-          bricks: map.reduce((acc, row) => {
-            return (
-              acc +
-              row.reduce((acc, brick) => {
-                return acc + (brick === 1 ? 1 : 0);
-              }, 0)
-            );
-          }, 0),
-        },
-      ];
-    }, [] as LevelType[]);
-    this.currentLevel = this.levels[this.index];
+    this.stages = stages;
+    this.currentStage = this.stages[this.index];
   }
 
   showStageText() {
@@ -74,13 +57,13 @@ export class StageCommand {
 
   execute(level: number) {
     this.index = level;
-    this.currentLevel = this.levels[this.index];
+    this.currentStage = this.stages[this.index];
     this.restart();
   }
 
   activateNext() {
-    this.index = Math.min(this.index + 1, this.levels.length - 1);
-    this.currentLevel = this.levels[this.index];
+    this.index = Math.min(this.index + 1, this.stages.length - 1);
+    this.currentStage = this.stages[this.index];
     this.restart();
   }
 
@@ -110,24 +93,20 @@ export class StageCommand {
   }
 
   isCleared() {
-    return this.currentLevel.bricks === this.game.destroyedBricks.getValue();
+    return this.currentStage.getBrickCount() === this.game.destroyedBricks.getValue();
   }
 
   private populateBlocks() {
-    if (this.currentLevel === null) return;
+    if (this.currentStage === null) return;
 
-    const offsetX = 0;
-    const offsetY = 10;
-    const blockWidth = 2;
-    const blockHeight = 1;
-    for (const [y, row] of this.currentLevel?.map?.entries()) {
-      for (const [x, type] of row.entries()) {
-        if (type === BrickType.Empty) continue;
-        const position = L.vec2(x * blockWidth + offsetX, y * blockHeight + offsetY);
-        if (type === BrickType.Unbreakable) this.game.bricks.push(new BrickUnbreakable(position));
-        if ([BrickType.Normal, BrickType.Hard].includes(type)) {
-          this.game.bricks.push(new BrickBreakable(position));
-        }
+    for (const [type, position] of this.currentStage.getCoords()) {
+      if (type === BrickType.Unbreakable) {
+        this.game.bricks.push(new BrickUnbreakable(position));
+        continue;
+      }
+
+      if ([BrickType.Normal, BrickType.Hard].includes(type)) {
+        this.game.bricks.push(new BrickBreakable(position));
       }
     }
   }
