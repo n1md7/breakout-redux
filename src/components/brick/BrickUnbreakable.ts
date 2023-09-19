@@ -13,6 +13,10 @@ export class BrickUnbreakable extends Brick {
     this.tileIndex = UnbreakableTileIndex;
   }
 
+  get isBreakable(): boolean {
+    return false;
+  }
+
   override setStrength(strength: number) {}
 
   override get score(): number {

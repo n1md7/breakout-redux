@@ -15,7 +15,6 @@ import { Balls } from '/src/components/Balls';
 import { ModeCommand } from '/src/commands/ModeCommand';
 import { GameMode } from '/src/enums/mode';
 import { Brick } from '/src/components/brick/Brick';
-import { BrickBreakable } from '/src/components/brick/BrickBreakable';
 import { Counter } from '/src/components/utils/Counter';
 
 L.setShowWatermark(Debug.enabled());
@@ -34,10 +33,10 @@ export class Game {
   public readonly levelTime: number = 90; // seconds
   public readonly lives: Lives;
   public readonly score: Score;
-  public readonly destroyed: Counter;
-  public readonly modeCommand: ModeCommand;
-  private readonly bonusCommand: BonusCommand;
-  private readonly stageCommand: StageCommand;
+  public readonly destroyedBricks: Counter;
+  public readonly mode: ModeCommand;
+  private readonly bonus: BonusCommand;
+  private readonly stage: StageCommand;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -50,16 +49,17 @@ export class Game {
 
     this.balls = new Balls();
     this.score = new Score(0);
-    this.destroyed = new Counter(0, 0, 999);
+    this.destroyedBricks = new Counter(0, 0, 999);
     this.lives = new Lives(3);
-    this.bonusCommand = new BonusCommand(this);
-    this.stageCommand = new StageCommand(this);
-    this.modeCommand = new ModeCommand(this);
+
+    this.bonus = new BonusCommand(this);
+    this.stage = new StageCommand(this);
+    this.mode = new ModeCommand(this);
   }
 
   run(mode: GameMode, stage: number) {
-    this.stageCommand.execute(stage);
-    this.modeCommand.execute(mode);
+    this.stage.execute(stage);
+    this.mode.execute(mode);
     L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
     emitter.on('bonusCollected', this.onBonusCollected);
     emitter.on('brickDestroyed', this.onBrickDestroyed);
@@ -67,7 +67,7 @@ export class Game {
 
   private init() {
     // Show the wall initially, to make sure the user won't lose instantly
-    this.bonusCommand.collect(BonusType.ExtraWall);
+    this.bonus.collect(BonusType.ExtraWall);
 
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
     L.setCameraPos(LevelSize.scale(0.5));
@@ -77,7 +77,7 @@ export class Game {
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
     this.startedAt = L.time;
-    this.stageCommand.restart();
+    this.stage.restart();
   }
 
   private update() {
@@ -114,11 +114,11 @@ export class Game {
   }
 
   private postUpdate() {
-    this.modeCommand.update();
-    if (this.stageCommand.stageIsCleared()) {
+    this.mode.update();
+    if (this.stage.isCleared()) {
       console.log('winner');
-      this.stageCommand.pause();
-      this.stageCommand.activateNext();
+      this.stage.pause();
+      this.stage.activateNext();
     }
   }
 
@@ -129,24 +129,24 @@ export class Game {
   }
 
   private postRender() {
-    this.stageCommand.showCounterText();
-    this.stageCommand.showClickToStartText();
-    this.stageCommand.showGameOverText();
-    this.stageCommand.showStageText();
+    this.stage.showCounterText();
+    this.stage.showClickToStartText();
+    this.stage.showGameOverText();
+    this.stage.showStageText();
   }
 
   private onBonusCollected(bonus: BonusType) {
-    this.bonusCommand.collect(bonus);
+    this.bonus.collect(bonus);
   }
 
   private onBrickDestroyed(brick: Brick) {
     this.score.add(brick.score);
-    if (brick instanceof BrickBreakable) this.destroyed.increment();
+    if (brick.isBreakable) this.destroyedBricks.increment();
     // No bonuses in classic mode
-    if (this.modeCommand.modeIsClassic()) return;
+    if (this.mode.isClassic()) return;
 
     if (this.score.toValue() % 1 === 0) {
-      this.bonusCommand.produce(this.modeCommand.pickBonusType());
+      this.bonus.produce(this.mode.pickBonusType());
     }
   }
 

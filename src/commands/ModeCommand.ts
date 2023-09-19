@@ -42,7 +42,7 @@ export class ModeCommand {
     return this.currentMode instanceof DynamicMode;
   }
 
-  modeIsClassic() {
+  isClassic() {
     return this.currentMode instanceof ClassicMode;
   }
 

@@ -31,6 +31,8 @@ export abstract class Brick extends L.EngineObject {
     this.renderOrder = -1;
   }
 
+  abstract get isBreakable(): boolean;
+
   get score(): number {
     return this.strength;
   }
