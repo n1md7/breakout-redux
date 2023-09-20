@@ -15,3 +15,27 @@ emitter.on('start', () => {
   });
   game.run(mode(), stage());
 });
+
+emitter.on('mode', () => {
+  console.log('Mode changed', {
+    mode: mode(),
+  });
+});
+
+emitter.on('stage', () => {
+  console.log('Stage changed', {
+    stage: GameMode[mode()],
+  });
+});
+
+emitter.on('re-start', () => {
+  console.log('Game restarted');
+});
+
+emitter.on('start-over', () => {
+  console.log('Game start-over');
+});
+
+emitter.on('continue', () => {
+  console.log('Game continued, request Ad');
+});

@@ -1,11 +1,11 @@
 import { Component, createSignal } from 'solid-js';
-import { Sound } from '/src/ui/settings/sound';
-import { Mode } from '/src/ui/settings/mode';
-import { Stages } from '/src/ui/settings/stages';
+import { Sound } from '/src/ui/settings/Sound';
+import { Mode } from '/src/ui/settings/Mode';
+import { Stages } from '/src/ui/settings/Stages';
 import { emitter } from '/src/utils/Emitter';
 
 type Props = {};
-export const Lobby: Component<Props> = () => {
+export const GameStart: Component<Props> = () => {
   const [open, setOpen] = createSignal(true);
   const handleStart = () => {
     setOpen(false);
@@ -13,7 +13,7 @@ export const Lobby: Component<Props> = () => {
   };
 
   return (
-    <dialog id="lobby" open={open()}>
+    <dialog open={open()}>
       <h2>Brick breaker</h2>
       <Mode />
       <Stages />

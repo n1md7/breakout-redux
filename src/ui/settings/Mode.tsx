@@ -22,7 +22,7 @@ export const Mode: Component<Props> = () => {
   const handleMode = (value: number) => () => setMode(value);
 
   return (
-    <section>
+    <section class="modes">
       <fieldset>
         <legend>
           <b>Mode</b>
@@ -30,11 +30,10 @@ export const Mode: Component<Props> = () => {
 
         <For each={modes}>
           {(item) => (
-            <>
+            <div class="mode">
               <input type="radio" id={item.name} checked={mode() === item.value} onChange={handleMode(item.value)} />
               <label for={item.name}>{item.name}</label>
-              <br />
-            </>
+            </div>
           )}
         </For>
       </fieldset>

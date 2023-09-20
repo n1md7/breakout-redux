@@ -9,10 +9,11 @@ html, body {
   font-family: "Black Ops One", "Helvetica Rounded", Arial, sans-serif;
 }
 
-dialog#lobby {
+dialog {
   top: 0;
   bottom: 0;
   border-radius: 8px;
+  z-index: 10;
 
 
   fieldset {
@@ -20,10 +21,10 @@ dialog#lobby {
   }
 
   section {
-    margin: 1.3em 0;
+    margin: 0.3em 0;
 
     &:last-child {
-      margin-top: 2.3em;
+      margin-top: 1.3em;
     }
   }
 
@@ -35,10 +36,15 @@ dialog#lobby {
 
   .modes {
     font-weight: bold;
+
+    .mode {
+      display: inline-block;
+      margin: 2px 4px;
+    }
   }
 
   .levels {
-    width: 50%;
+    width: 20%;
     margin: 0 auto;
 
     .level {
@@ -49,6 +55,7 @@ dialog#lobby {
 
   .actions {
     button {
+      margin-top: 0.3em;
       padding: 0.5em 1em;
       border-radius: 5px;
       border: 1px solid #000;
@@ -58,6 +65,11 @@ dialog#lobby {
       font-size: 1em;
       width: 100%;
       font-family: "Black Ops One", "Helvetica Rounded", Arial, sans-serif;
+
+      svg {
+        position: relative;
+        top: 3px;
+      }
     }
   }
 

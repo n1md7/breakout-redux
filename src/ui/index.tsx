@@ -1,4 +1,6 @@
 import { render } from 'solid-js/web';
-import { Lobby } from '/src/ui/lobby';
+import { GameStart } from '/src/ui/GameStart';
+import { GameOver } from '/src/ui/GameOver';
 
-render(() => <Lobby />, document.body);
+render(() => <GameStart />, document.body);
+render(() => <GameOver />, document.body);

@@ -16,6 +16,7 @@ import { ModeCommand } from '/src/commands/ModeCommand';
 import { GameMode } from '/src/enums/mode';
 import { Brick } from '/src/components/brick/Brick';
 import { Counter } from '/src/components/utils/Counter';
+import { setGameOver } from '/src/ui/store';
 
 L.setShowWatermark(Debug.enabled());
 Debug.disabled() && L.setDebugKey(-1);
@@ -99,6 +100,7 @@ export class Game {
       if (this.lives.runOut()) {
         // TODO: Play game over sound
         this.over = true;
+        setGameOver(true);
         return console.info('Game over');
       }
       this.idle = true;
