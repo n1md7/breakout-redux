@@ -1,12 +1,10 @@
 import { Component, createSignal, JSX } from 'solid-js';
 import { emitter } from '/src/utils/Emitter';
+import { music, setMusic, setSound, sound } from '/src/ui/store';
 
 type Props = {};
 
 export const Sound: Component<Props> = () => {
-  const [sound, setSound] = createSignal(true);
-  const [music, setMusic] = createSignal(true);
-
   const handleSound = ({ target }: Event) => {
     const { checked } = target as HTMLInputElement;
     setSound(checked);

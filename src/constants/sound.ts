@@ -1,4 +1,14 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
+import { music, sound } from '/src/ui/store';
+import { emitter } from '/src/utils/Emitter';
+
+emitter.on('sound', () => {
+  L.setSoundEnable(sound());
+  console.info('Sound is', sound() ? 'enabled' : 'disabled');
+});
+emitter.emit('music', () => {
+  console.info('Music is', music() ? 'enabled' : 'disabled');
+});
 
 export const Sounds = {
   GameStart: new L.Sound([, 0, 500, , 0.04, 0.3, 1, 2, , , 570, 0.02, 0.02, , , , 0.04]),
