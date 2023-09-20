@@ -1,14 +1,13 @@
 import env from './utils/Env';
 import { Game } from '/src/game/Game';
-import { dialog, selected } from '/src/ui/lobby';
-
-dialog.showModal();
+import { emitter } from '/src/utils/Emitter';
+import { mode, stage } from '/src/ui/store';
 
 console.info('Is development mode:', env.isDevelopment());
 
 const game = new Game();
 
-dialog.addEventListener('close', (e) => {
-  game.run(selected.mode, selected.level);
-  console.log(selected);
+emitter.on('start', () => {
+  console.log('Game started', stage(), mode());
+  game.run(mode(), stage());
 });

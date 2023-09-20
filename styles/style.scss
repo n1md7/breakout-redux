@@ -1,53 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Permanent+Marker&family=Roboto:ital,wght@1,300&display=swap');
+
 $color: #494746;
 html, body {
   background-color: $color !important;
   padding: 0;
   margin: 0;
   user-select: none;
+  font-family: "Black Ops One", "Helvetica Rounded", Arial, sans-serif;
 }
 
 dialog#lobby {
+  top: 0;
+  bottom: 0;
+  border-radius: 8px;
+
+
+  fieldset {
+    border-radius: 8px;
+  }
+
+  section {
+    margin: 1.3em 0;
+
+    &:last-child {
+      margin-top: 2.3em;
+    }
+  }
+
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
   }
 
   text-align: center;
-  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
 
   .modes {
     font-weight: bold;
   }
 
   .levels {
-    gap: 1em;
     width: 50%;
     margin: 0 auto;
 
-    .block {
-      box-sizing: border-box;
+    .level {
       display: inline-block;
-      margin: 0.25em;
-      width: 48px;
-      font-size: 0.75em;
-      border: 1px solid #000;
-      padding: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-
-      &.selected {
-        background-color: #b94810;
-        color: #fff;
-      }
+      margin: 2px 4px;
     }
   }
 
-  hr {
-    margin: 2em 0;
-  }
-
   .actions {
-
+    button {
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      border: 1px solid #000;
+      background-color: #eeeded;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1em;
+      width: 100%;
+      font-family: "Black Ops One", "Helvetica Rounded", Arial, sans-serif;
+    }
   }
 
 }

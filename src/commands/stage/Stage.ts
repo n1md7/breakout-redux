@@ -1,5 +1,6 @@
 import { Vector2, vec2 } from 'littlejsengine/build/littlejs.esm';
 import { BrickType } from '/src/enums/brick';
+import { emitter } from '/src/utils/Emitter';
 
 export abstract class Stage {
   protected readonly offsetX = 0;
@@ -67,5 +68,6 @@ export abstract class Stage {
 
   unlock() {
     localStorage.setItem(this.key, 'unlocked');
+    emitter.emit('stage-unlocked', this.name);
   }
 }

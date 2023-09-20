@@ -1,42 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <base href="%VITE_BASE_URL%" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel='stylesheet' type='text/css' href='styles/style.scss' />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="%VITE_TITLE%" />
-    <meta property="og:description" content="%VITE_DESCRIPTION%" />
-    <meta property="og:image" content="favicon.svg" />
-    <meta name="twitter:card" content="favicon.svg" />
-    <meta name="twitter:title" content="%VITE_TITLE%" />
-    <meta name="twitter:description" content="%VITE_DESCRIPTION%" />
-    <title>"%VITE_TITLE%"</title>
-    <script type="module" defer src='src/main.ts'></script>
-  </head>
-  <body>
-  <dialog id="lobby">
-  <h3>Brick breaker</h3>
-    <div class="modes">
-      <p>
-        <label>
-          Game Mode:
-          <select>
-            <option value="0">Classic</option>
-            <option value="1">Dynamic</option>
-            <option value="2" selected>Modern</option>
-          </select>
-        </label>
-      </p>
-    </div>
-    <div class="levels"></div>
-    <hr>
-    <div class="actions">
-      <button id="start">Start</button>
-    </div>
-  </dialog>
+<head>
+  <meta charset="UTF-8"/>
+  <base href="%VITE_BASE_URL%"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel='stylesheet' type='text/css' href='styles/style.scss'/>
+  <meta name="theme-color" content="#000000"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta property="og:title" content="%VITE_TITLE%"/>
+  <meta property="og:description" content="%VITE_DESCRIPTION%"/>
+  <meta property="og:image" content="favicon.svg"/>
+  <meta name="twitter:card" content="favicon.svg"/>
+  <meta name="twitter:title" content="%VITE_TITLE%"/>
+  <meta name="twitter:description" content="%VITE_DESCRIPTION%"/>
+  <title>"%VITE_TITLE%"</title>
+  <script type="module" defer src='src/main.ts'></script>
+  <script type="module" defer src='src/ui'></script>
+</head>
+<body>
 
-  </body>
+</body>
 </html>

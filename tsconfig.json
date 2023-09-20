@@ -21,8 +21,10 @@
     "checkJs": true,
     "paths": {
       "/src/*": ["src/*"],
-      "/public/*": ["public/*"],
-    }
+      "/public/*": ["public/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js"
   },
   "include": ["src", "tests", "src/**/*.d.ts"],
 }
