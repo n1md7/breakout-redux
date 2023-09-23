@@ -19,7 +19,7 @@ export class LinkedList<T = unknown> {
   }
 
   add(value: T) {
-    const node = { value, next: null };
+    const node = new ListNode(value);
     if (this.head === null) {
       this.head = node;
       this.tail = node;
@@ -36,6 +36,7 @@ export class LinkedList<T = unknown> {
     if (this.head === null) return;
     if (this.head.value === value) {
       this.head = this.head.next;
+      if (this.head === null) this.tail = null; // Update tail reference
       this.length--;
       return;
     }
@@ -43,6 +44,7 @@ export class LinkedList<T = unknown> {
     while (current.next !== null) {
       if (current.next.value === value) {
         current.next = current.next.next;
+        if (current.next === null) this.tail = current; // Update tail reference
         this.length--;
         return;
       }
@@ -70,7 +72,13 @@ export class LinkedList<T = unknown> {
   }
 
   toArray() {
-    return [...this];
+    const result: T[] = [];
+    let current = this.head;
+    while (current !== null) {
+      result.push(current.value);
+      current = current.next;
+    }
+    return result;
   }
 
   getLength() {
