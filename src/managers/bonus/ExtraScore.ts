@@ -1,4 +1,4 @@
-import { BonusType } from '/src/commands/bonus/BonusType';
+import { BonusType } from '/src/managers/bonus/BonusType';
 import { Game } from '/src/game/Game';
 
 export class ExtraScore extends BonusType {

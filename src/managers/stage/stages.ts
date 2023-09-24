@@ -1,4 +1,4 @@
-import { Stage } from '/src/commands/stage/Stage';
+import { Stage } from '/src/managers/stage/Stage';
 
 export const stages: Stage[] = [
   new (class extends Stage {

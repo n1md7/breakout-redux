@@ -19,7 +19,7 @@ export const GameStart: Component<Props> = () => {
       <Stages />
       <Sound />
       <section class="actions">
-        <button onClick={handleStart}>Start</button>
+        <button onClick={handleStart}>Play</button>
       </section>
     </dialog>
   );

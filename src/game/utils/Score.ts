@@ -1,29 +1,45 @@
+import * as store from '/src/ui/store';
+import { Storage } from '/src/utils/Storage';
+import { Counter } from '/src/components/utils/Counter';
+
 export class Score {
-  private score = 0;
-  private highScore = 0;
+  private readonly score: Counter;
+  private readonly highScore: Storage<number>;
 
   constructor(private readonly initialValue: number) {
-    this.score = this.initialValue;
-    this.highScore = Number(localStorage.getItem('highScore')) || 0;
+    this.score = new Counter(initialValue, 0, 10e15);
+    this.highScore = new Storage('highScore', 0);
+    store.setHighScore(this.highScore.toValue());
+    store.setScore(this.score.getValue());
   }
 
   increment() {
-    this.score++;
+    this.score.increment();
+    store.setScore(this.score.getValue());
     this.evaluateHighScore();
   }
 
   decrement() {
-    this.score--;
+    this.score.decrement();
+    store.setScore(this.score.getValue);
     this.evaluateHighScore();
   }
 
   add(value: number) {
-    this.score += value;
+    this.score.add(value);
+    store.setScore(this.score.getValue());
+    this.evaluateHighScore();
+  }
+
+  double() {
+    this.score.setVal(this.score.getValue() * 2);
+    store.setScore(this.score.getValue());
     this.evaluateHighScore();
   }
 
   reset() {
-    this.score = this.initialValue;
+    this.score.restore();
+    store.setScore(this.initialValue);
   }
 
   toString() {
@@ -31,7 +47,7 @@ export class Score {
   }
 
   toValue() {
-    return this.score;
+    return this.score.getValue();
   }
 
   getHighScore() {
@@ -39,9 +55,9 @@ export class Score {
   }
 
   private evaluateHighScore() {
-    if (this.score > this.highScore) {
-      this.highScore = this.score;
-      localStorage.setItem('highScore', this.highScore.toString());
+    if (this.score.getValue() > this.highScore.toValue()) {
+      this.highScore.set(this.score.getValue());
+      store.setHighScore(this.score.getValue());
     }
   }
 }

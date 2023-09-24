@@ -1,4 +1,4 @@
-import { Mode } from '/src/commands/mode/Mode';
+import { Mode } from '/src/managers/mode/Mode';
 import { Game } from '/src/game/Game';
 import * as TWEEN from '@tweenjs/tween.js';
 import { LinkedList } from '/src/data-structures/LinkedList';

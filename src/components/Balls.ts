@@ -46,14 +46,14 @@ export class Balls {
 
   double() {
     // Let's make sure we reference the array before we start modifying it.
-    for (const ball of this.balls.toArray()) {
+    for (const ball of this.balls) {
       this.spawnOneAt(ball.pos);
     }
   }
 
   triple() {
     // Let's make sure we reference the array before we start modifying it.
-    for (const ball of this.balls.toArray()) {
+    for (const ball of this.balls) {
       this.spawnManyAt(ball.pos, 2);
     }
   }
@@ -72,9 +72,9 @@ export class Balls {
 
   update() {
     for (const ball of this.balls) {
-      if (ball.destroyed) this.balls.remove(ball);
       // Does not remove the ball right away, but waits for the next frame.
       if (ball.pos.y < -1) ball.destroy();
+      if (ball.destroyed) this.balls.remove(ball);
     }
   }
 

@@ -7,37 +7,37 @@ import Tilemap from '/src/assets/bricks/tiles.png';
 import { Debug } from '/src/utils/Debug';
 import { emitter } from '/src/utils/Emitter';
 import { BonusType } from '/src/enums/bonus';
-import { BonusCommand } from '/src/commands/BonusCommand';
-import { Sounds } from '/src/constants/sound';
-import { StageCommand } from '/src/commands/StageCommand';
-import { Lives } from '/src/components/utils/Lives';
+import { BonusManager } from '/src/managers/BonusManager';
+import { StageManager } from '/src/managers/StageManager';
+import { ExtraBalls } from '/src/components/utils/ExtraBalls';
 import { Balls } from '/src/components/Balls';
-import { ModeCommand } from '/src/commands/ModeCommand';
+import { ModeManager } from '/src/managers/ModeManager';
 import { GameMode } from '/src/enums/mode';
 import { Brick } from '/src/components/brick/Brick';
 import { Counter } from '/src/components/utils/Counter';
-import { setGameOver } from '/src/ui/store';
+import { StateManager } from '/src/managers/StateManager';
+import { sound } from '/src/ui/store';
 
 L.setShowWatermark(Debug.enabled());
+L.setSoundEnable(sound());
 Debug.disabled() && L.setDebugKey(-1);
 
 export class Game {
-  public paddle: Paddle | null = null;
-  public balls: Balls;
-  public bricks: Brick[] = [];
-  public floor: Wall | null = null;
-  public over: boolean = false;
-  public paused: boolean = true;
-  public idle: boolean = false;
-  public startedAt: number = 0;
+  readonly levelTime: number = 90; // seconds
+  readonly lives: ExtraBalls;
+  readonly score: Score;
+  readonly destroyedBricks: Counter;
 
-  public readonly levelTime: number = 90; // seconds
-  public readonly lives: Lives;
-  public readonly score: Score;
-  public readonly destroyedBricks: Counter;
-  public readonly mode: ModeCommand;
-  private readonly bonus: BonusCommand;
-  private readonly stage: StageCommand;
+  readonly mode: ModeManager;
+  readonly bonus: BonusManager;
+  readonly stage: StageManager;
+  readonly state: StateManager;
+
+  paddle: Paddle | null = null;
+  balls: Balls;
+  bricks: Brick[] = [];
+  floor: Wall | null = null;
+  startedAt: number = 0;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -51,11 +51,17 @@ export class Game {
     this.balls = new Balls();
     this.score = new Score(0);
     this.destroyedBricks = new Counter(0, 0, 999);
-    this.lives = new Lives(3);
+    this.lives = new ExtraBalls(3);
 
-    this.bonus = new BonusCommand(this);
-    this.stage = new StageCommand(this);
-    this.mode = new ModeCommand(this);
+    this.bonus = new BonusManager(this);
+    this.stage = new StageManager(this);
+    this.mode = new ModeManager(this);
+    this.state = new StateManager(this);
+  }
+
+  public get timeLeft() {
+    const delta = Math.floor(L.time - this.startedAt);
+    return this.levelTime - delta;
   }
 
   run(mode: GameMode, stage: number) {
@@ -67,61 +73,28 @@ export class Game {
   }
 
   private init() {
-    // Show the wall initially, to make sure the user won't lose instantly
-    this.bonus.collect(BonusType.ExtraWall);
-
     L.setCanvasFixedSize(new L.Vector2(1280, 720));
     L.setCameraPos(LevelSize.scale(0.5));
 
     this.paddle = new Paddle(LevelSize);
+
     new Wall(L.vec2(-0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
+
     this.startedAt = L.time;
     this.stage.restart();
+
+    // Give it a chance to render the first frame
+    setTimeout(() => this.state.changeTo('idle'));
   }
 
   private update() {
-    const mouseKeyPressed = L.mouseWasPressed(0) || L.gamepadWasPressed(0);
-    if (mouseKeyPressed) {
-      // Start the game
-      this.startedAt = L.time;
-      this.paused = false;
-      this.over = false;
-    }
-
-    if (this.over) return;
-    if (this.paused) return;
-
-    this.balls.update();
-
-    if (this.balls.escaped() && !this.idle) {
-      this.lives.decrement(); // Lost 1 life
-      if (this.lives.runOut()) {
-        // TODO: Play game over sound
-        this.over = true;
-        setGameOver(true);
-        return console.info('Game over');
-      }
-      this.idle = true;
-    }
-
-    if (mouseKeyPressed) {
-      if (!this.balls.hasValue() && this.lives.hasValue()) {
-        Sounds.GameStart.play();
-        this.balls.spawnOneAt(L.cameraPos); // Center of the screen
-        this.idle = false;
-      }
-    }
+    this.state.update(L.timeDelta);
   }
 
   private postUpdate() {
     this.mode.update();
-    if (this.stage.isCleared()) {
-      console.log('winner');
-      this.stage.pause();
-      this.stage.activateNext();
-    }
   }
 
   private render() {
@@ -132,9 +105,6 @@ export class Game {
 
   private postRender() {
     this.stage.showCounterText();
-    this.stage.showClickToStartText();
-    this.stage.showGameOverText();
-    this.stage.showStageText();
   }
 
   private onBonusCollected(bonus: BonusType) {
@@ -150,10 +120,5 @@ export class Game {
     if (this.score.toValue() % 1 === 0) {
       this.bonus.produce(this.mode.pickBonusType());
     }
-  }
-
-  public get timeLeft() {
-    const delta = Math.floor(L.time - this.startedAt);
-    return this.levelTime - delta;
   }
 }

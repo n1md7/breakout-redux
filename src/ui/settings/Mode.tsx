@@ -1,6 +1,7 @@
 import { Component, For } from 'solid-js';
 import { GameMode } from '/src/enums/mode';
 import { mode, setMode } from '/src/ui/store';
+import { emitter } from '/src/utils/Emitter';
 
 type Props = {};
 
@@ -19,7 +20,10 @@ export const Mode: Component<Props> = () => {
       value: GameMode.Modern,
     },
   ];
-  const handleMode = (value: number) => () => setMode(value);
+  const handleMode = (value: number) => () => {
+    setMode(value);
+    emitter.emit('modeChange', value);
+  };
 
   return (
     <section class="modes">

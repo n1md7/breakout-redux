@@ -1,6 +1,6 @@
 import { Counter } from '/src/components/utils/Counter';
 
-export class Lives extends Counter {
+export class ExtraBalls extends Counter {
   runOut() {
     return !this.hasValue();
   }

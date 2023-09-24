@@ -1,4 +1,4 @@
-import { Mode } from '/src/commands/mode/Mode';
+import { Mode } from '/src/managers/mode/Mode';
 import * as TWEEN from '@tweenjs/tween.js';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { LinkedList } from '/src/data-structures/LinkedList';
@@ -23,8 +23,11 @@ export class DynamicMode extends Mode {
 
   apply(): void {
     console.info('Dynamic mode activated');
+    this.tweens.clear();
     this.timers.push(
       setInterval(() => {
+        if (!this.game.state.isStarted) return;
+
         for (const brick of this.game.bricks) {
           const tween = new TWEEN.Tween(brick.pos);
           tween.to({ y: brick.pos.y - 1 }, 500);
@@ -36,7 +39,8 @@ export class DynamicMode extends Mode {
     );
   }
 
-  override update() {
+  override async update() {
+    await super.update();
     for (const tween of this.tweens) {
       tween.update();
     }

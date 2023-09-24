@@ -8,11 +8,11 @@ export abstract class Mode {
 
   protected timers: NodeJS.Timeout[] = [];
 
-  protected constructor(public readonly game: Game) {}
+  constructor(public readonly game: Game) {}
 
   abstract apply(): void;
 
-  update() {}
+  async update() {}
 
   pickBonus() {
     return this.bonusPicker.pick();

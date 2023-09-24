@@ -1,12 +1,12 @@
 import { Game } from '/src/game/Game';
 import { GameMode } from '/src/enums/mode';
-import { DynamicMode } from '/src/commands/mode/DynamicMode';
-import { Mode } from '/src/commands/mode/Mode';
-import { ClassicMode } from '/src/commands/mode/ClassicMode';
-import { BonusMode } from '/src/commands/mode/BonusMode';
-import { ModernMode } from '/src/commands/mode/ModernMode';
+import { DynamicMode } from '/src/managers/mode/DynamicMode';
+import { Mode } from '/src/managers/mode/Mode';
+import { ClassicMode } from '/src/managers/mode/ClassicMode';
+import { BonusMode } from '/src/managers/mode/BonusMode';
+import { ModernMode } from '/src/managers/mode/ModernMode';
 
-export class ModeCommand {
+export class ModeManager {
   private readonly modes: Record<GameMode, Mode>;
   private currentMode: Mode;
 
