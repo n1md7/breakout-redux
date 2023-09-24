@@ -23,7 +23,6 @@ L.setSoundEnable(sound());
 Debug.disabled() && L.setDebugKey(-1);
 
 export class Game {
-  readonly levelTime: number = 90; // seconds
   readonly lives: ExtraBalls;
   readonly score: Score;
   readonly destroyedBricks: Counter;
@@ -37,7 +36,6 @@ export class Game {
   balls: Balls;
   bricks: Brick[] = [];
   floor: Wall | null = null;
-  startedAt: number = 0;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -59,11 +57,6 @@ export class Game {
     this.state = new StateManager(this);
   }
 
-  public get timeLeft() {
-    const delta = Math.floor(L.time - this.startedAt);
-    return this.levelTime - delta;
-  }
-
   run(mode: GameMode, stage: number) {
     this.stage.execute(stage);
     this.mode.execute(mode);
@@ -82,7 +75,6 @@ export class Game {
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
 
-    this.startedAt = L.time;
     this.stage.restart();
 
     // Give it a chance to render the first frame

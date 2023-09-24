@@ -1,22 +1,28 @@
-import { Component } from 'solid-js';
+import { Component, Show } from 'solid-js';
 import { highScore, score } from '/src/ui/store';
 
-type Props = {};
+type Props = {
+  highScoreOnly?: boolean;
+};
 
-export const Scores: Component<Props> = () => {
+export const Scores: Component<Props> = ({ highScoreOnly }) => {
   return (
     <fieldset>
       <legend>
         <b>Score</b>
       </legend>
       <div>
+        <Show when={!highScoreOnly}>
+          <div>
+            <div>
+              Current Score: <b>{score()}</b>
+            </div>
+          </div>
+        </Show>
         <div>
-          <div>Current Score</div>
-          <b>{score()}</b>
-        </div>
-        <div>
-          <div>High Score</div>
-          <b>{highScore()}</b>
+          <div>
+            High Score: <b>{highScore()}</b>
+          </div>
         </div>
       </div>
     </fieldset>

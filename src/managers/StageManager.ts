@@ -46,9 +46,9 @@ export class StageManager {
     const navTextValues = [
       `Score: ${String(this.game.score.toValue()).padStart(4, '0')}`,
       `Lives: ${String(this.game.lives.getValue()).padStart(2, '0')}`,
-      `Time-Left: ${String(this.game.timeLeft).padStart(3, '0')}`,
+      `Stage: ${String(this.game.stage.currentStage.name).padStart(2, '0')}`,
       `Mode: ${this.game.mode.current.displayName}`,
-      `High-Score: ${String(this.game.score.getHighScore()).padStart(5, '0')}`,
+      `High-Score: ${String(this.game.score.getHighScore()).padStart(6, '0')}`,
     ];
     new L.FontImage().drawText(navTextValues.join(' | '), L.vec2(LevelSize.x * 0.5, LevelSize.y + 0.5), 0.07, true);
   }
@@ -77,7 +77,6 @@ export class StageManager {
     this.game.bricks.length = 0;
     this.game.lives.restore();
     this.game.destroyedBricks.setVal(0);
-    this.game.startedAt = L.time;
     this.game.mode.clearTimers();
   }
 
