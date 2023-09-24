@@ -46,14 +46,14 @@ export class Balls {
 
   double() {
     // Let's make sure we reference the array before we start modifying it.
-    for (const ball of this.balls) {
+    for (const ball of this.balls.toArray()) {
       this.spawnOneAt(ball.pos);
     }
   }
 
   triple() {
     // Let's make sure we reference the array before we start modifying it.
-    for (const ball of this.balls) {
+    for (const ball of this.balls.toArray()) {
       this.spawnManyAt(ball.pos, 2);
     }
   }
@@ -84,7 +84,7 @@ export class Balls {
     }
   }
 
-  reset() {
+  destroy() {
     for (const ball of this.balls) ball.destroy();
     this.balls.clear();
   }

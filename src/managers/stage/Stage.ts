@@ -1,6 +1,7 @@
 import { Vector2, vec2 } from 'littlejsengine/build/littlejs.esm';
 import { BrickType } from '/src/enums/brick';
 import { emitter } from '/src/utils/Emitter';
+import { Counter } from '/src/components/utils/Counter';
 
 export abstract class Stage {
   protected readonly offsetX = 0;
@@ -33,6 +34,10 @@ export abstract class Stage {
    */
   getBrickCount() {
     return this.count;
+  }
+
+  brickCountEquals(count: Counter) {
+    return this.count === count.getValue();
   }
 
   getCoords() {

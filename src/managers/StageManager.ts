@@ -21,6 +21,10 @@ export class StageManager {
     this.currentStage = this.stages[this.index];
   }
 
+  get current() {
+    return this.currentStage;
+  }
+
   showStageText() {
     // if (this.game.paused) {
     //   new L.FontImage().drawText(
@@ -47,7 +51,7 @@ export class StageManager {
       `Score: ${String(this.game.score.toValue()).padStart(4, '0')}`,
       `Lives: ${String(this.game.lives.getValue()).padStart(2, '0')}`,
       `Stage: ${String(this.game.stage.currentStage.name).padStart(2, '0')}`,
-      `Mode: ${this.game.mode.current.displayName}`,
+      `Mode: ${this.game.mode.toString()}`,
       `High-Score: ${String(this.game.score.getHighScore()).padStart(6, '0')}`,
     ];
     new L.FontImage().drawText(navTextValues.join(' | '), L.vec2(LevelSize.x * 0.5, LevelSize.y + 0.5), 0.07, true);
@@ -56,46 +60,26 @@ export class StageManager {
   execute(level: number) {
     this.index = level;
     this.currentStage = this.stages[this.index];
-    this.restart();
   }
 
   next() {
     this.index = Math.min(this.index + 1, this.stages.length - 1);
     this.currentStage = this.stages[this.index];
-    this.restart();
+
+    this.start();
+  }
+
+  start() {
+    this.game.bricks.destroy();
+    this.game.bricks.populate();
   }
 
   restart() {
-    this.reset();
-    this.populateBlocks();
-    this.game.mode.current.apply();
-  }
-
-  reset() {
-    this.game.balls.reset();
-    this.game.bricks.forEach((brick) => brick.destroy());
-    this.game.bricks.length = 0;
-    this.game.lives.restore();
-    this.game.destroyedBricks.setVal(0);
-    this.game.mode.clearTimers();
+    this.game.bricks.destroy();
+    this.game.bricks.populate();
   }
 
   isCleared() {
-    return this.currentStage.getBrickCount() === this.game.destroyedBricks.getValue();
-  }
-
-  private populateBlocks() {
-    if (this.currentStage === null) return;
-
-    for (const [type, position] of this.currentStage.getCoords()) {
-      if (type === BrickType.Unbreakable) {
-        this.game.bricks.push(new BrickUnbreakable(position));
-        continue;
-      }
-
-      if ([BrickType.Normal, BrickType.Hard].includes(type)) {
-        this.game.bricks.push(new BrickBreakable(position));
-      }
-    }
+    return this.currentStage.brickCountEquals(this.game.bricks.destroyed);
   }
 }

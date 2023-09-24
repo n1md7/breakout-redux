@@ -32,11 +32,11 @@ export class BonusManager {
     };
   }
 
-  collect(type: BonusType) {
+  collect(current: Bonus) {
     // TODO: Play pickup sound
-    this.commands[type].apply();
+    this.commands[current.getType()].apply();
     for (const bonus of this.bonuses) {
-      if (bonus.destroyed) {
+      if (bonus.destroyed || current === bonus) {
         this.bonuses.remove(bonus);
       }
     }
@@ -52,7 +52,7 @@ export class BonusManager {
     }
   }
 
-  reset() {
+  destroy() {
     this.clearTimers();
     for (const bonus of this.bonuses) {
       bonus.destroy();

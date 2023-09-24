@@ -13,4 +13,5 @@ export enum GameMode {
   Dynamic,
   Modern,
   Bonus,
+  Empty,
 }

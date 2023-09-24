@@ -19,6 +19,10 @@ export class Bonus extends L.EngineObject {
     this.sign = L.randInt(0, 1) === 0 ? -1 : 1;
   }
 
+  getType() {
+    return this.type;
+  }
+
   override update() {
     this.angle += this.sign * 0.3;
 
@@ -32,7 +36,7 @@ export class Bonus extends L.EngineObject {
 
   override collideWithObject(object: L.EngineObject): boolean {
     if (object instanceof Paddle) {
-      emitter.emit('bonusCollected', this.type);
+      emitter.emit('bonusCollected', this);
       this.destroy();
     }
 

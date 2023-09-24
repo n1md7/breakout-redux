@@ -5,18 +5,16 @@ import { LevelSize } from '/src/constants/level';
 import { Score } from '/src/game/utils/Score';
 import Tilemap from '/src/assets/bricks/tiles.png';
 import { Debug } from '/src/utils/Debug';
-import { emitter } from '/src/utils/Emitter';
-import { BonusType } from '/src/enums/bonus';
 import { BonusManager } from '/src/managers/BonusManager';
 import { StageManager } from '/src/managers/StageManager';
 import { ExtraBalls } from '/src/components/utils/ExtraBalls';
 import { Balls } from '/src/components/Balls';
 import { ModeManager } from '/src/managers/ModeManager';
 import { GameMode } from '/src/enums/mode';
-import { Brick } from '/src/components/brick/Brick';
 import { Counter } from '/src/components/utils/Counter';
 import { StateManager } from '/src/managers/StateManager';
 import { sound } from '/src/ui/store';
+import { BrickManager } from '/src/managers/BrickManager';
 
 L.setShowWatermark(Debug.enabled());
 L.setSoundEnable(sound());
@@ -31,10 +29,10 @@ export class Game {
   readonly bonus: BonusManager;
   readonly stage: StageManager;
   readonly state: StateManager;
+  readonly bricks: BrickManager;
 
-  paddle: Paddle | null = null;
   balls: Balls;
-  bricks: Brick[] = [];
+  paddle: Paddle | null = null;
   floor: Wall | null = null;
 
   constructor() {
@@ -43,8 +41,6 @@ export class Game {
     this.postUpdate = this.postUpdate.bind(this);
     this.render = this.render.bind(this);
     this.postRender = this.postRender.bind(this);
-    this.onBonusCollected = this.onBonusCollected.bind(this);
-    this.onBrickDestroyed = this.onBrickDestroyed.bind(this);
 
     this.balls = new Balls();
     this.score = new Score(0);
@@ -55,14 +51,13 @@ export class Game {
     this.stage = new StageManager(this);
     this.mode = new ModeManager(this);
     this.state = new StateManager(this);
+    this.bricks = new BrickManager(this);
   }
 
   run(mode: GameMode, stage: number) {
     this.stage.execute(stage);
     this.mode.execute(mode);
     L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
-    emitter.on('bonusCollected', this.onBonusCollected);
-    emitter.on('brickDestroyed', this.onBrickDestroyed);
   }
 
   private init() {
@@ -75,7 +70,7 @@ export class Game {
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
 
-    this.stage.restart();
+    this.stage.start();
 
     // Give it a chance to render the first frame
     setTimeout(() => this.state.changeTo('idle'));
@@ -85,8 +80,8 @@ export class Game {
     this.state.update(L.timeDelta);
   }
 
-  private postUpdate() {
-    this.mode.update();
+  private async postUpdate() {
+    await this.mode.update();
   }
 
   private render() {
@@ -97,20 +92,5 @@ export class Game {
 
   private postRender() {
     this.stage.showCounterText();
-  }
-
-  private onBonusCollected(bonus: BonusType) {
-    this.bonus.collect(bonus);
-  }
-
-  private onBrickDestroyed(brick: Brick) {
-    this.score.add(brick.score);
-    if (brick.isBreakable) this.destroyedBricks.increment();
-    // No bonuses in classic mode
-    if (this.mode.isClassic()) return;
-
-    if (this.score.toValue() % 1 === 0) {
-      this.bonus.produce(this.mode.pickBonusType());
-    }
   }
 }

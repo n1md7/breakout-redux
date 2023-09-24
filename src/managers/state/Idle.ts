@@ -5,8 +5,8 @@ export class Idle extends State {
   override async attach() {
     await super.attach();
 
-    this.game.balls.reset();
-    this.game.bonus.reset();
+    this.game.balls.destroy();
+    this.game.bonus.destroy();
   }
 
   async update(dt: number) {

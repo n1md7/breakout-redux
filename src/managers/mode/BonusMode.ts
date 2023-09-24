@@ -39,7 +39,7 @@ export class BonusMode extends Mode {
     );
   }
 
-  override update() {
+  override async update() {
     for (const tween of this.tweens) {
       tween.update();
     }
