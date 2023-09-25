@@ -56,6 +56,7 @@ export class Game {
 
   run(mode: GameMode, stage: number) {
     this.stage.execute(stage);
+    this.stage.start(); // Classic mode requires blocks to present
     this.mode.execute(mode);
     L.engineInit(this.init, this.update, this.postUpdate, this.render, this.postRender, Tilemap);
   }
@@ -69,8 +70,6 @@ export class Game {
     new Wall(L.vec2(-0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x + 0.5, LevelSize.y * 0.5), L.vec2(1, LevelSize.y));
     new Wall(L.vec2(LevelSize.x * 0.5, LevelSize.y), L.vec2(LevelSize.x + 2, 1));
-
-    this.stage.start();
 
     // Give it a chance to render the first frame
     setTimeout(() => this.state.changeTo('idle'));
