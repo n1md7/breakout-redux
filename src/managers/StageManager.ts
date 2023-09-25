@@ -1,12 +1,10 @@
 import { Game } from '/src/game/Game';
-import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import * as L from 'littlejsengine/build/littlejs.esm';
+import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';
-import { BrickType } from '/src/enums/brick';
-import { BrickUnbreakable } from '/src/components/brick/BrickUnbreakable';
-import { BrickBreakable } from '/src/components/brick/BrickBreakable';
 import { Stage } from '/src/managers/stage/Stage';
 import { stages } from '/src/managers/stage/stages';
+import { bonusLevelCounter } from '/src/ui/store';
 
 export class StageManager {
   private readonly game: Game;
@@ -34,13 +32,18 @@ export class StageManager {
   }
 
   showCounterText() {
-    const navTextValues = [
-      `Score: ${String(this.game.score.toValue()).padStart(4, '0')}`,
-      `Lives: ${String(this.game.lives.getValue()).padStart(2, '0')}`,
-      `Stage: ${String(this.game.stage.currentStage.name).padStart(2, '0')}`,
-      `Mode: ${this.game.mode.toString()}`,
-      `High-Score: ${String(this.game.score.getHighScore()).padStart(6, '0')}`,
-    ];
+    const navTextValues: string[] = [];
+    navTextValues.push(`Score: ${String(this.game.score.toValue()).padStart(4, '0')}`);
+    navTextValues.push(`Lives: ${String(this.game.lives.getValue()).padStart(2, '0')}`);
+    if (!this.game.mode.isBonus()) {
+      navTextValues.push(`Stage: ${String(this.game.stage.currentStage.name).padStart(2, '0')}`);
+    }
+    navTextValues.push(`Mode: ${this.game.mode.toString()}`);
+    navTextValues.push(`High-Score: ${String(this.game.score.getHighScore()).padStart(6, '0')}`);
+
+    if (this.game.mode.isBonus()) {
+      navTextValues.push(`Ends: ${String(bonusLevelCounter()).padStart(2, '0')}`);
+    }
     new L.FontImage().drawText(navTextValues.join(' | '), L.vec2(LevelSize.x * 0.5, LevelSize.y + 0.5), 0.07, true);
   }
 

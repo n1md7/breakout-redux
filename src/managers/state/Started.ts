@@ -2,12 +2,14 @@ import { State } from '/src/managers/state/State';
 import { Sounds } from '/src/constants/sound';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { Game } from '/src/game/Game';
-import { BonusType } from '/src/enums/bonus';
 import { Brick } from '/src/components/brick/Brick';
 import { emitter } from '/src/utils/Emitter';
 import { Bonus } from '/src/components/Bonus';
+import { bonusLevelCounter, setBonusLevelCounter } from '/src/ui/store';
 
 export class Started extends State {
+  private timer: NodeJS.Timeout | null = null;
+
   constructor(game: Game) {
     super(game);
 
@@ -17,6 +19,8 @@ export class Started extends State {
 
   override async attach() {
     await super.attach();
+
+    this.startCountdown();
 
     this.game.bonus.resume();
     this.game.balls.resume();
@@ -34,6 +38,7 @@ export class Started extends State {
     this.game.bonus.stop();
     this.game.balls.stop();
     this.game.mode.clearTimers();
+    this.stopCountdown();
 
     emitter.off('bonusCollected', this.onBonusCollected);
     emitter.off('brickDestroyed', this.onBrickDestroyed);
@@ -43,6 +48,8 @@ export class Started extends State {
 
   override async update(dt: number) {
     this.game.balls.update();
+
+    await this.evaluateBonusModeEnd();
 
     if (this.game.balls.escaped()) {
       this.game.balls.destroy();
@@ -72,6 +79,28 @@ export class Started extends State {
 
     if (this.game.score.toValue() % 1 === 0) {
       this.game.bonus.produce(this.game.mode.pickBonusType());
+    }
+  }
+
+  private async evaluateBonusModeEnd() {
+    if (this.game.mode.modeIsBonus()) {
+      if (bonusLevelCounter() <= 0) {
+        await this.game.state.changeTo('stageWinDialog');
+      }
+    }
+  }
+
+  private startCountdown() {
+    if (!this.game.mode.modeIsBonus()) return;
+    this.timer = setInterval(() => {
+      setBonusLevelCounter((prev) => prev - 1);
+    }, 1000);
+  }
+
+  private stopCountdown() {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
     }
   }
 }

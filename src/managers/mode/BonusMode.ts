@@ -4,6 +4,7 @@ import * as TWEEN from '@tweenjs/tween.js';
 import { LinkedList } from '/src/data-structures/LinkedList';
 import L from 'littlejsengine/build/littlejs.esm';
 import { BonusType } from '/src/enums/bonus';
+import { setBonusLevelCounter } from '/src/ui/store';
 
 export class BonusMode extends Mode {
   public readonly displayName = 'Bonus';
@@ -24,6 +25,7 @@ export class BonusMode extends Mode {
 
   apply(): void {
     console.info('Bonus mode activated');
+    setBonusLevelCounter(30); // 30 seconds to finish the level
     this.game.balls.setStrength(9); // Max strength
     this.tweens.clear();
     this.timers.push(
