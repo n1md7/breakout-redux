@@ -1,12 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Permanent+Marker&family=Roboto:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@1000&display=swap');
 
 $color: #494746;
 html, body {
-  background-color: $color !important;
   padding: 0;
   margin: 0;
   user-select: none;
   font-family: "Black Ops One", "Helvetica Rounded", Arial, sans-serif;
+}
+
+body {
+  background-color: $color !important;
+  width: 100vw;
+  height: 100vh;
 }
 
 dialog {
@@ -16,8 +22,13 @@ dialog {
   z-index: 10;
   background-image: radial-gradient(#0000006e, transparent);
 
+  h2 {
+    font-family: 'Cairo Play', sans-serif;
+  }
+
   fieldset {
     border-radius: 8px;
+    border-color: $color;
   }
 
   section {
@@ -58,7 +69,7 @@ dialog {
       margin-top: 0.3em;
       padding: 0.5em 1em;
       border-radius: 5px;
-      border: 1px solid #000;
+      border: 3px solid $color;
       background-color: #eeeded;
       cursor: pointer;
       font-weight: bold;

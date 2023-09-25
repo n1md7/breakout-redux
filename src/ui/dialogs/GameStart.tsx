@@ -5,6 +5,7 @@ import { Stages } from '/src/ui/settings/Stages';
 import { emitter } from '/src/utils/Emitter';
 import { Scores } from '/src/ui/components/Scores';
 import { BsJoystick } from 'solid-icons/bs';
+import { FaSolidHammer } from 'solid-icons/fa';
 
 type Props = {};
 export const GameStart: Component<Props> = () => {
@@ -16,7 +17,9 @@ export const GameStart: Component<Props> = () => {
 
   return (
     <dialog open={open()}>
-      <h2>Brick breaker</h2>
+      <h2>
+        Brick Breaker <FaSolidHammer />
+      </h2>
       <Scores highScoreOnly />
       <Mode />
       <Stages />
