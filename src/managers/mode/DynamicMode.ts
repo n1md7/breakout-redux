@@ -23,6 +23,7 @@ export class DynamicMode extends Mode {
 
   apply(): void {
     console.info('Dynamic mode activated');
+    this.game.balls.setStrength(2);
     this.tweens.clear();
     this.timers.push(
       setInterval(() => {

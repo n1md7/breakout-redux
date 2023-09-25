@@ -6,10 +6,12 @@ import { ClassicMode } from '/src/managers/mode/ClassicMode';
 import { BonusMode } from '/src/managers/mode/BonusMode';
 import { ModernMode } from '/src/managers/mode/ModernMode';
 import { EmptyMode } from '/src/managers/mode/EmptyMode';
+import { setMode } from '/src/ui/store';
 
 export class ModeManager {
   private readonly modes: Record<GameMode, Mode>;
   private currentMode: Mode;
+  private previousMode: Mode | null = null;
 
   constructor(game: Game) {
     this.modes = {
@@ -28,12 +30,31 @@ export class ModeManager {
 
   execute(mode: GameMode) {
     this.clearTimers();
+    this.previousMode = this.currentMode;
     this.currentMode = this.modes[mode];
     this.currentMode.apply();
   }
 
   async update() {
     await this.currentMode.update();
+  }
+
+  toggleBonus() {
+    if (this.modeIsBonus()) return this.restorePreviousMode();
+
+    this.execute(GameMode.Bonus);
+    setMode(GameMode.Bonus);
+  }
+
+  private restorePreviousMode() {
+    this.clearTimers();
+    if (this.previousMode) {
+      if (this.previousMode instanceof ClassicMode) setMode(GameMode.Classic);
+      else if (this.previousMode instanceof ModernMode) setMode(GameMode.Modern);
+      else if (this.previousMode instanceof DynamicMode) setMode(GameMode.Dynamic);
+      this.currentMode = this.previousMode;
+      this.currentMode.apply();
+    }
   }
 
   setDefault() {

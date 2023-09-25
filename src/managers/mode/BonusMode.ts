@@ -25,7 +25,7 @@ export class BonusMode extends Mode {
   apply(): void {
     console.info('Bonus mode activated');
     this.game.balls.setStrength(9); // Max strength
-
+    this.tweens.clear();
     this.timers.push(
       setInterval(() => {
         for (const brick of this.game.bricks) {
@@ -40,6 +40,7 @@ export class BonusMode extends Mode {
   }
 
   override async update() {
+    await super.update();
     for (const tween of this.tweens) {
       tween.update();
     }

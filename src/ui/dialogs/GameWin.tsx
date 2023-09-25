@@ -1,19 +1,25 @@
-import { Component } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { emitter } from '/src/utils/Emitter';
-import { gameWinDialogShown } from '/src/ui/store';
+import { gameWinDialogShown, mode } from '/src/ui/store';
 import { Scores } from '/src/ui/components/Scores';
 import { TbMultiplier2x } from 'solid-icons/tb';
 import { BiSolidVideos } from 'solid-icons/bi';
 import { VsDebugRestart } from 'solid-icons/vs';
 import { ImNext2 } from 'solid-icons/im';
+import { GameMode } from '/src/enums/mode';
 
 type Props = {};
 export const GameWin: Component<Props> = () => {
+  const [disabled, setDisabled] = createSignal(false);
   const handleDouble = () => emitter.emit('doubleWin');
 
   const handleRestart = () => emitter.emit('restartStage');
 
   const handleNext = () => emitter.emit('nextStage');
+
+  createEffect(() => {
+    setDisabled(mode() === GameMode.Bonus);
+  }, [mode()]);
 
   return (
     <dialog open={gameWinDialogShown()}>
@@ -27,7 +33,7 @@ export const GameWin: Component<Props> = () => {
           <TbMultiplier2x />
           <BiSolidVideos />
         </button>
-        <button onClick={handleRestart}>
+        <button onClick={handleRestart} disabled={disabled()}>
           Restart <VsDebugRestart />
         </button>
         <button onClick={handleNext}>

@@ -25,25 +25,12 @@ export class StageManager {
     return this.currentStage;
   }
 
-  showStageText() {
-    // if (this.game.paused) {
-    //   new L.FontImage().drawText(
-    //     `Stage ${String(this.index + 1).padStart(2, '0')}`,
-    //     cameraPos.add(L.vec2(0, 0)),
-    //     0.2,
-    //     true,
-    //   );
-    // }
-  }
-
   showClickToStartText() {
     new L.FontImage().drawText('Click to Start', L.cameraPos.add(L.vec2(0, -5)), 0.1, true);
   }
 
-  showGameOverText() {
-    // if (this.game.over) {
-    //   new L.FontImage().drawText(`Game Over`, cameraPos.add(L.vec2(0, 0)), 0.2, true);
-    // }
+  showCurrentStageText() {
+    new L.FontImage().drawText(`Stage ${this.currentStage.name}`, cameraPos.add(L.vec2(0, 0)), 0.2, true);
   }
 
   showCounterText() {
@@ -65,6 +52,8 @@ export class StageManager {
   next() {
     this.index = Math.min(this.index + 1, this.stages.length - 1);
     this.currentStage = this.stages[this.index];
+
+    this.game.mode.toggleBonus(); // Every second stage is a bonus stage
 
     this.start();
   }

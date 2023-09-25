@@ -21,6 +21,7 @@ export class ModernMode extends Mode {
   }
 
   apply(): void {
+    this.game.balls.setStrength(3);
     console.info('Modern mode activated');
   }
 }

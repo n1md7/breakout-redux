@@ -33,6 +33,7 @@ export class Started extends State {
   override async detach() {
     this.game.bonus.stop();
     this.game.balls.stop();
+    this.game.mode.clearTimers();
 
     emitter.off('bonusCollected', this.onBonusCollected);
     emitter.off('brickDestroyed', this.onBrickDestroyed);
