@@ -61,7 +61,7 @@ export class ModeManager {
     this.execute(GameMode.Dynamic);
   }
 
-  modeIsDynamic() {
+  isDynamic() {
     return this.currentMode instanceof DynamicMode;
   }
 
@@ -73,8 +73,12 @@ export class ModeManager {
     return this.currentMode instanceof BonusMode;
   }
 
-  modeIsModern() {
+  isModern() {
     return this.currentMode instanceof ModernMode;
+  }
+
+  isBonus() {
+    return this.currentMode instanceof BonusMode;
   }
 
   pickBonusType() {
