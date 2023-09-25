@@ -14,6 +14,7 @@ import { GameMode } from '/src/enums/mode';
 import { StateManager } from '/src/managers/StateManager';
 import { sound } from '/src/ui/store';
 import { BrickManager } from '/src/managers/BrickManager';
+import { AdManager } from '/src/managers/AdManager';
 
 L.setShowWatermark(Debug.enabled());
 L.setSoundEnable(sound());
@@ -28,6 +29,7 @@ export class Game {
   readonly stage: StageManager;
   readonly state: StateManager;
   readonly bricks: BrickManager;
+  readonly ads: AdManager;
 
   balls: Balls;
   paddle: Paddle | null = null;
@@ -49,6 +51,7 @@ export class Game {
     this.mode = new ModeManager(this);
     this.state = new StateManager(this);
     this.bricks = new BrickManager(this);
+    this.ads = new AdManager();
   }
 
   run(mode: GameMode, stage: number) {

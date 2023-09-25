@@ -11,7 +11,8 @@ window.game = game;
 // @ts-ignore
 window.store = store;
 
-emitter.on('start', () => {
+emitter.on('start', async () => {
   game.run(store.mode(), store.stage());
-  return window.CrazyGames.SDK.game.gameplayStart();
+
+  if (env.isCrazyGames()) await window.CrazyGames.SDK.game.gameplayStart();
 });

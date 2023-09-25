@@ -1,30 +1,22 @@
 import { State } from '/src/managers/state/State';
-import { as } from 'vitest/dist/reporters-cb94c88b';
 
 export class AdBreakGetExtraLife extends State {
   override async attach() {
     await super.attach();
 
-    await window.CrazyGames.SDK.game.gameplayStop();
-    window.CrazyGames.SDK.ad.requestAd('rewarded', {
-      adStarted: () => console.info('Ad started'),
-      adError: async (error) => {
-        console.warn('Ad error', error);
-        // No ad, game over
-        await this.game.state.changeTo('gameOver');
-      },
-      adFinished: async () => {
-        console.info('Ad finished');
-
-        await this.rewardPlayer();
-        await this.game.state.changeTo('idle');
-      },
-    });
+    try {
+      await this.game.ads.showRewardAd();
+      console.info('Ad finished');
+      await this.rewardPlayer();
+      await this.game.state.changeTo('idle');
+    } catch (error) {
+      console.warn('Ad error', error);
+      // No ad, game over
+      await this.game.state.changeTo('gameOver');
+    }
   }
 
   override async detach() {
-    await window.CrazyGames.SDK.game.gameplayStart();
-
     await super.detach();
   }
 

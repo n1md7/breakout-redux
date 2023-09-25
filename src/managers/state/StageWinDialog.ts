@@ -2,6 +2,7 @@ import { State } from '/src/managers/state/State';
 import { emitter } from '/src/utils/Emitter';
 import * as store from '/src/ui/store';
 import { Game } from '/src/game/Game';
+import env from '/src/utils/Env';
 
 export class StageWinDialog extends State {
   constructor(game: Game) {
@@ -14,7 +15,7 @@ export class StageWinDialog extends State {
   override async attach() {
     await super.attach();
 
-    await window.CrazyGames.SDK.game.happytime();
+    if (env.isCrazyGames()) await window.CrazyGames.SDK.game.happytime();
 
     store.setGameWinDialogShown(true);
     emitter.on('doubleWin', this.handleDoubleWin);

@@ -4,26 +4,19 @@ export class AdBreakDoubleScore extends State {
   override async attach() {
     await super.attach();
 
-    await window.CrazyGames.SDK.game.gameplayStop();
-    window.CrazyGames.SDK.ad.requestAd('rewarded', {
-      adStarted: () => console.info('Ad started'),
-      adError: async (error) => {
-        console.warn('Ad error', error);
-        // No ad, no reward
-        await this.game.state.changeTo('nextStage');
-      },
-      adFinished: async () => {
-        console.info('Ad finished');
-        // Reward player on ad finished
-        await this.rewardPlayer();
-        await this.game.state.changeTo('nextStage');
-      },
-    });
+    try {
+      await this.game.ads.showRewardAd();
+      console.info('Ad finished');
+      await this.rewardPlayer();
+    } catch (error) {
+      console.warn('Ad error', error);
+      // No ad, no reward
+    } finally {
+      await this.game.state.changeTo('nextStage');
+    }
   }
 
   override async detach() {
-    await window.CrazyGames.SDK.game.gameplayStart();
-
     await super.detach();
   }
 
