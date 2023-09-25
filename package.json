@@ -15,7 +15,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode=development",
+    "dev": "vite --mode=crazy",
     "build:github": "tsc && vite build --mode=github",
     "build:crazy": "tsc && vite build --mode=crazy",
     "build:itch": "tsc && vite build --mode=itch",
