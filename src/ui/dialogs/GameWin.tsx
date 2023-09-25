@@ -1,6 +1,6 @@
 import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { emitter } from '/src/utils/Emitter';
-import { gameWinDialogShown, mode } from '/src/ui/store';
+import { adRewardDisabled, adRewardTimeLeft, gameWinDialogShown, mode } from '/src/ui/store';
 import { Scores } from '/src/ui/components/Scores';
 import { TbMultiplier2x } from 'solid-icons/tb';
 import { BiSolidVideos } from 'solid-icons/bi';
@@ -28,10 +28,13 @@ export const GameWin: Component<Props> = () => {
       </h2>
       <Scores />
       <section class="actions">
-        <button onClick={handleDouble}>
+        <button onClick={handleDouble} disabled={adRewardDisabled()}>
           Double score
           <TbMultiplier2x />
           <BiSolidVideos />
+          <Show when={adRewardDisabled()}>
+            <span class="timer">{String(adRewardTimeLeft()).padStart(2, '0')}</span>
+          </Show>
         </button>
         <button onClick={handleRestart} disabled={disabled()}>
           Restart <VsDebugRestart />
