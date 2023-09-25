@@ -24,7 +24,7 @@ export const GameWin: Component<Props> = () => {
   return (
     <dialog open={gameWinDialogShown()}>
       <h2>
-        You win! <span class="emoji">🎉</span>
+        You win <span class="emoji">🎉</span>
       </h2>
       <Scores />
       <section class="actions">
