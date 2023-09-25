@@ -18,6 +18,9 @@ export class Started extends State {
   override async attach() {
     await super.attach();
 
+    this.game.bonus.resume();
+    this.game.balls.resume();
+
     emitter.on('bonusCollected', this.onBonusCollected);
     emitter.on('brickDestroyed', this.onBrickDestroyed);
 
@@ -25,6 +28,16 @@ export class Started extends State {
       Sounds.GameStart.play();
       this.game.balls.spawnOneAt(L.cameraPos); // Center of the screen
     }
+  }
+
+  override async detach() {
+    this.game.bonus.stop();
+    this.game.balls.stop();
+
+    emitter.off('bonusCollected', this.onBonusCollected);
+    emitter.off('brickDestroyed', this.onBrickDestroyed);
+
+    await super.detach();
   }
 
   override async update(dt: number) {

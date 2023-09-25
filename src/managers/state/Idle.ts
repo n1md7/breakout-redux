@@ -4,9 +4,10 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 export class Idle extends State {
   override async attach() {
     await super.attach();
+  }
 
-    this.game.balls.destroy();
-    this.game.bonus.destroy();
+  override async detach() {
+    await super.detach();
   }
 
   async update(dt: number) {

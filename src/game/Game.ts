@@ -11,7 +11,6 @@ import { ExtraBalls } from '/src/components/utils/ExtraBalls';
 import { Balls } from '/src/components/Balls';
 import { ModeManager } from '/src/managers/ModeManager';
 import { GameMode } from '/src/enums/mode';
-import { Counter } from '/src/components/utils/Counter';
 import { StateManager } from '/src/managers/StateManager';
 import { sound } from '/src/ui/store';
 import { BrickManager } from '/src/managers/BrickManager';
@@ -23,7 +22,6 @@ Debug.disabled() && L.setDebugKey(-1);
 export class Game {
   readonly lives: ExtraBalls;
   readonly score: Score;
-  readonly destroyedBricks: Counter;
 
   readonly mode: ModeManager;
   readonly bonus: BonusManager;
@@ -44,7 +42,6 @@ export class Game {
 
     this.balls = new Balls();
     this.score = new Score(0);
-    this.destroyedBricks = new Counter(0, 0, 999);
     this.lives = new ExtraBalls(3);
 
     this.bonus = new BonusManager(this);

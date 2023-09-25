@@ -88,4 +88,12 @@ export class Balls {
     for (const ball of this.balls) ball.destroy();
     this.balls.clear();
   }
+
+  stop() {
+    for (const ball of this.balls) ball.stopMovement();
+  }
+
+  resume() {
+    for (const ball of this.balls) ball.resumeMovement();
+  }
 }

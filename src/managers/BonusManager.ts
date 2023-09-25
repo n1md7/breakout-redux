@@ -32,11 +32,11 @@ export class BonusManager {
     };
   }
 
-  collect(current: Bonus) {
+  collect(bonus: Bonus) {
     // TODO: Play pickup sound
-    this.commands[current.getType()].apply();
+    this.commands[bonus.getType()].apply();
     for (const bonus of this.bonuses) {
-      if (bonus.destroyed || current === bonus) {
+      if (bonus.destroyed) {
         this.bonuses.remove(bonus);
       }
     }
@@ -58,5 +58,13 @@ export class BonusManager {
       bonus.destroy();
       this.bonuses.remove(bonus);
     }
+  }
+
+  stop() {
+    for (const bonus of this.bonuses) bonus.stopMovement();
+  }
+
+  resume() {
+    for (const bonus of this.bonuses) bonus.resumeMovement();
   }
 }

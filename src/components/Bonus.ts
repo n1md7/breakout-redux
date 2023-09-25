@@ -8,6 +8,9 @@ export class Bonus extends L.EngineObject {
   private readonly type: BonusType;
   private readonly sign: number = 1;
 
+  private stopped = false;
+  private oldVelocity: L.Vector2 = L.vec2(0);
+
   constructor(position: L.Vector2, type: BonusType) {
     super(position, L.vec2(0.5));
 
@@ -24,6 +27,8 @@ export class Bonus extends L.EngineObject {
   }
 
   override update() {
+    if (this.stopped) return;
+
     this.angle += this.sign * 0.3;
 
     if (this.pos.y < 0) {
@@ -42,5 +47,16 @@ export class Bonus extends L.EngineObject {
 
     // No collision with anything
     return false;
+  }
+
+  public stopMovement() {
+    this.stopped = true;
+    this.oldVelocity = this.velocity;
+    this.velocity = L.vec2(0);
+  }
+
+  public resumeMovement() {
+    this.stopped = false;
+    this.velocity = this.oldVelocity;
   }
 }

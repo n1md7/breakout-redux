@@ -5,7 +5,15 @@ export class NextStage extends State {
   override async attach() {
     await super.attach();
 
-    this.game.stage.next();
     await this.game.state.changeTo('idle');
+  }
+
+  override async detach() {
+    this.game.balls.destroy();
+    this.game.bonus.destroy();
+
+    this.game.stage.next();
+
+    await super.detach();
   }
 }

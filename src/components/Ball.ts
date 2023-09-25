@@ -8,6 +8,8 @@ import { Strength } from '/src/components/utils/Strength';
 
 export class Ball extends L.EngineObject {
   readonly strength: Strength;
+  private stopped = false;
+  private oldVelocity: L.Vector2 = L.vec2(0);
 
   constructor(position: L.Vector2, strength = 1) {
     super(position, L.vec2(0.25));
@@ -30,9 +32,23 @@ export class Ball extends L.EngineObject {
   }
 
   override update() {
+    if (this.stopped) return;
+
     this.angleVelocity = this.velocity.length() * 10;
     this.color = this.strength.getColor();
+
     return super.update();
+  }
+
+  public stopMovement() {
+    this.stopped = true;
+    this.oldVelocity = this.velocity;
+    this.velocity = L.vec2(0);
+  }
+
+  public resumeMovement() {
+    this.stopped = false;
+    this.velocity = this.oldVelocity;
   }
 
   private handleBrickCollision(brick: Brick) {

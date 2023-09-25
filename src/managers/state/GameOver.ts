@@ -12,6 +12,7 @@ export class GameOver extends State {
   override async attach() {
     await super.attach();
 
+    this.game.bonus.stop(); // Keep on screen
     setGameOverDialogShown(true);
     emitter.on('startClick', this.handleStartClick);
   }
