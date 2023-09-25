@@ -30,6 +30,8 @@ export class BonusMode extends Mode {
     this.tweens.clear();
     this.timers.push(
       setInterval(() => {
+        if (!this.game.state.isStarted) return;
+
         for (const brick of this.game.bricks) {
           const tween = new TWEEN.Tween(brick.pos);
           tween.to({ y: brick.pos.y - 1 }, 900);
