@@ -52,6 +52,11 @@ export class Started extends State {
     await this.evaluateBonusModeEnd();
 
     if (this.game.balls.escaped()) {
+      if (this.game.mode.isBonus()) {
+        // One chance for the bonus mode
+        return await this.game.state.changeTo('stageWinDialog');
+      }
+
       this.game.balls.destroy();
       this.game.lives.decrement();
       if (this.game.lives.runOut()) {

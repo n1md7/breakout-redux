@@ -28,7 +28,8 @@ export class StageManager {
   }
 
   showCurrentStageText() {
-    new L.FontImage().drawText(`Stage ${this.currentStage.name}`, cameraPos.add(L.vec2(0, 0)), 0.2, true);
+    const text = this.game.mode.isBonus() ? 'Bonus Stage' : `Stage ${this.currentStage.name}`;
+    new L.FontImage().drawText(text, cameraPos.add(L.vec2(0, 0)), 0.2, true);
   }
 
   showCounterText() {

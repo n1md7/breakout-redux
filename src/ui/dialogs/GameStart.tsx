@@ -4,6 +4,7 @@ import { Mode } from '/src/ui/settings/Mode';
 import { Stages } from '/src/ui/settings/Stages';
 import { emitter } from '/src/utils/Emitter';
 import { Scores } from '/src/ui/components/Scores';
+import { BsJoystick } from 'solid-icons/bs';
 
 type Props = {};
 export const GameStart: Component<Props> = () => {
@@ -21,7 +22,9 @@ export const GameStart: Component<Props> = () => {
       <Stages />
       <Sound />
       <section class="actions">
-        <button onClick={handleStart}>Play</button>
+        <button onClick={handleStart}>
+          Play <BsJoystick size={'1.3em'} />
+        </button>
       </section>
     </dialog>
   );
