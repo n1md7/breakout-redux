@@ -15,7 +15,7 @@ export const ExtraLifeDialog: Component<Props> = () => {
   return (
     <dialog open={extraLifeDialogShown()}>
       <h2>Get extra life</h2>
-      <p>Watch a short ad to get one last chance to beat your high score.</p>
+      <p>Watch a short Ad to get an extra chance to beat your high score.</p>
       <section class="actions">
         <button onClick={handleCancel}>No, thanks</button>
         <button onClick={handleWatch} disabled={adRewardDisabled()}>
