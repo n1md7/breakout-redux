@@ -77,7 +77,8 @@ export class Started extends State {
     // No bonuses in classic mode
     if (this.game.mode.isClassic()) return;
 
-    if (this.game.score.toValue() % 1 === 0) {
+    // Every 3rd brick destroyed, spawn a bonus
+    if (this.game.score.toValue() % 3 === 0) {
       this.game.bonus.produce(this.game.mode.pickBonusType());
     }
   }
