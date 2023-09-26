@@ -20,6 +20,7 @@ import { TVShader } from '/src/post-processing/TVShader';
 
 L.setShowWatermark(Debug.enabled());
 L.setSoundEnable(sound());
+L.setSoundVolume(0.1);
 Debug.disabled() && L.setDebugKey(-1);
 
 export class Game {
