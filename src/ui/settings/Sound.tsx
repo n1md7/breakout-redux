@@ -30,7 +30,7 @@ export const Sound: Component<Props> = ({ children }) => {
             <input type="checkbox" id="sound" checked={sound()} onChange={handleSound} />
             <label for="sound">Sound</label>
 
-            <input type="checkbox" id="music" checked={music()} onChange={handleMusic} />
+            <input type="checkbox" id="music" checked={music()} onChange={handleMusic} disabled={true} />
             <label for="music">Music</label>
           </div>
         </fieldset>

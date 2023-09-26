@@ -1,5 +1,6 @@
 import { createSignal } from 'solid-js';
 import { GameMode } from '/src/enums/mode';
+import { stages } from '/src/managers/stage/stages';
 
 export const [mode, setMode] = createSignal(GameMode.Modern);
 export const [stage, setStage] = createSignal(0);
@@ -19,3 +20,18 @@ export const [gameWinDialogShown, setGameWinDialogShown] = createSignal(false);
 export const [extraLifeDialogShown, setExtraLifeDialogShown] = createSignal(false);
 
 export const [bonusLevelCounter, setBonusLevelCounter] = createSignal(0);
+
+export const [stagesUnlocked, setStagesUnlocked] = createSignal(
+  stages.map((stage) => {
+    return {
+      name: stage.name,
+      unlocked: stage.isUnlocked(),
+    };
+  }),
+);
+
+export const unlockStage = (name: string, index: number) => {
+  const stages = stagesUnlocked();
+  stages[index].unlocked = true;
+  setStagesUnlocked(stages.map((stage) => Object.assign({}, stage)));
+};

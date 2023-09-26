@@ -3,7 +3,7 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { cameraPos } from 'littlejsengine/build/littlejs.esm';
 import { LevelSize } from '/src/constants/level';
 import { Stage } from '/src/managers/stage/Stage';
-import { stages } from '/src/managers/stage/stages';
+import { bonusStage, stages } from '/src/managers/stage/stages';
 import { bonusLevelCounter } from '/src/ui/store';
 
 export class StageManager {
@@ -54,10 +54,13 @@ export class StageManager {
   }
 
   next() {
-    this.index = Math.min(this.index + 1, this.stages.length - 1);
-    this.currentStage = this.stages[this.index];
-
     this.game.mode.toggleBonus(); // Every second stage is a bonus stage
+    if (this.game.mode.isBonus()) this.currentStage = bonusStage;
+    else {
+      this.index = Math.min(this.index + 1, this.stages.length - 1);
+      this.currentStage = this.stages[this.index];
+      if (!this.currentStage.isUnlocked()) this.currentStage.unlock(this.index);
+    }
 
     this.start();
   }

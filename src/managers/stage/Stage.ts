@@ -71,8 +71,8 @@ export abstract class Stage {
     return localStorage.getItem(this.key) === 'unlocked';
   }
 
-  unlock() {
+  unlock(index: number) {
     localStorage.setItem(this.key, 'unlocked');
-    emitter.emit('stage-unlocked', this.name);
+    emitter.emit('stage-unlocked', this.name, index);
   }
 }
