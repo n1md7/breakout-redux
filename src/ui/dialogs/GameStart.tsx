@@ -6,6 +6,7 @@ import { emitter } from '/src/utils/Emitter';
 import { Scores } from '/src/ui/components/Scores';
 import { BsJoystick } from 'solid-icons/bs';
 import { FaSolidHammer } from 'solid-icons/fa';
+import { Visual } from '/src/ui/settings/Visual';
 
 type Props = {};
 export const GameStart: Component<Props> = () => {
@@ -23,7 +24,9 @@ export const GameStart: Component<Props> = () => {
       <Scores highScoreOnly />
       <Mode />
       <Stages />
-      <Sound />
+      <Sound>
+        <Visual />
+      </Sound>
       <section class="actions">
         <button onClick={handleStart}>
           Play <BsJoystick size={'1.3em'} />

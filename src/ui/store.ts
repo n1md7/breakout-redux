@@ -5,6 +5,7 @@ export const [mode, setMode] = createSignal(GameMode.Modern);
 export const [stage, setStage] = createSignal(0);
 
 export const [sound, setSound] = createSignal(true);
+export const [postProcessing, setPostProcessing] = createSignal(false);
 export const [music, setMusic] = createSignal(true);
 
 export const [score, setScore] = createSignal(0);

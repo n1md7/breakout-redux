@@ -1,8 +1,10 @@
 import { State } from '/src/managers/state/State';
+import * as L from 'littlejsengine/build/littlejs.esm';
 
 export class AdBreakGetExtraLife extends State {
   override async attach() {
     await super.attach();
+    L.setPaused(true);
 
     try {
       await this.game.ads.showRewardAd();
@@ -17,6 +19,7 @@ export class AdBreakGetExtraLife extends State {
   }
 
   override async detach() {
+    L.setPaused(false);
     await super.detach();
   }
 

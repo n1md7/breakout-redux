@@ -1,4 +1,5 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
+import { glInitPostProcess } from 'littlejsengine/build/littlejs.esm';
 import { Paddle } from '/src/components/Paddle';
 import { Wall } from '/src/components/Wall';
 import { LevelSize } from '/src/constants/level';
@@ -12,9 +13,10 @@ import { Balls } from '/src/components/Balls';
 import { ModeManager } from '/src/managers/ModeManager';
 import { GameMode } from '/src/enums/mode';
 import { StateManager } from '/src/managers/StateManager';
-import { sound } from '/src/ui/store';
+import { postProcessing, sound } from '/src/ui/store';
 import { BrickManager } from '/src/managers/BrickManager';
 import { AdManager } from '/src/managers/AdManager';
+import { TVShader } from '/src/post-processing/TVShader';
 
 L.setShowWatermark(Debug.enabled());
 L.setSoundEnable(sound());
@@ -73,6 +75,7 @@ export class Game {
 
     // Give it a chance to render the first frame
     setTimeout(() => this.state.changeTo('idle'));
+    if (postProcessing()) glInitPostProcess(TVShader, true);
   }
 
   private update() {
