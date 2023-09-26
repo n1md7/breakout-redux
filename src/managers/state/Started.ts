@@ -20,6 +20,7 @@ export class Started extends State {
   override async attach() {
     await super.attach();
 
+    this.game.mode.reApply();
     this.startCountdown();
 
     this.game.bonus.resume();

@@ -28,6 +28,7 @@ export class BonusMode extends Mode {
     setBonusLevelCounter(30); // 30 seconds to finish the level
     this.game.balls.setStrength(9); // Max strength
     this.tweens.clear();
+    this.clearTimers();
     this.timers.push(
       setInterval(() => {
         if (!this.game.state.isStarted) return;

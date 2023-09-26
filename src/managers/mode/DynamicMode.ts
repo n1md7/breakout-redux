@@ -25,9 +25,11 @@ export class DynamicMode extends Mode {
     console.info('Dynamic mode activated');
     this.game.balls.setStrength(2);
     this.tweens.clear();
+    this.clearTimers();
     this.timers.push(
       setInterval(() => {
         if (!this.game.state.isStarted) return;
+        this.tweens.clear();
 
         for (const brick of this.game.bricks) {
           const tween = new TWEEN.Tween(brick.pos);

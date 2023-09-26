@@ -88,4 +88,8 @@ export class ModeManager {
   clearTimers() {
     this.currentMode.clearTimers();
   }
+
+  reApply() {
+    this.currentMode.apply();
+  }
 }
