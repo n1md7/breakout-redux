@@ -9,6 +9,7 @@ export class GameOver extends State {
 
     this.handleStartClick = this.handleStartClick.bind(this);
   }
+
   override async attach() {
     await super.attach();
 

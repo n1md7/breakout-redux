@@ -9,6 +9,7 @@ export class ExtraLifeDialog extends State {
 
     this.handleGetExtraLife = this.handleGetExtraLife.bind(this);
   }
+
   override async attach() {
     await super.attach();
 

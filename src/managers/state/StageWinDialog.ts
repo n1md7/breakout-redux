@@ -3,6 +3,7 @@ import { emitter } from '/src/utils/Emitter';
 import * as store from '/src/ui/store';
 import { Game } from '/src/game/Game';
 import env from '/src/utils/Env';
+import { sounds } from '/src/constants/sound';
 
 export class StageWinDialog extends State {
   constructor(game: Game) {
@@ -15,6 +16,7 @@ export class StageWinDialog extends State {
   override async attach() {
     await super.attach();
 
+    sounds.gameWin.play();
     if (env.isCrazyGames()) await window.CrazyGames.SDK.game.happytime();
 
     store.setGameWinDialogShown(true);

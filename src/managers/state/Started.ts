@@ -1,5 +1,5 @@
 import { State } from '/src/managers/state/State';
-import { Sounds } from '/src/constants/sound';
+import { sounds } from '/src/constants/sound';
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { Game } from '/src/game/Game';
 import { Brick } from '/src/components/brick/Brick';
@@ -30,7 +30,7 @@ export class Started extends State {
     emitter.on('brickDestroyed', this.onBrickDestroyed);
 
     if (!this.game.balls.hasValue() && this.game.lives.hasValue()) {
-      Sounds.GameStart.play();
+      sounds.gameStart.play();
       this.game.balls.spawnOneAt(L.cameraPos); // Center of the screen
     }
   }
@@ -57,6 +57,8 @@ export class Started extends State {
         // One chance for the bonus mode
         return await this.game.state.changeTo('stageWinDialog');
       }
+
+      sounds.gameLose.play();
 
       this.game.balls.destroy();
       this.game.lives.decrement();

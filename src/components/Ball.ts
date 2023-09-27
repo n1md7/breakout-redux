@@ -1,6 +1,6 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
 import { Brick } from '/src/components/brick/Brick';
-import { Sounds } from '/src/constants/sound';
+import { sounds } from '/src/constants/sound';
 import { Particles } from '/src/constants/particle';
 import { Paddle } from '/src/components/Paddle';
 import { emitter } from '/src/utils/Emitter';
@@ -55,11 +55,11 @@ export class Ball extends L.EngineObject {
     this.strength.sub(brick.getStrength());
     const { color } = brick; // Copy the color of the brick, down below it changes
     // this.color = color; // Change the color of the ball to the color of the brick
-    Sounds.BrickHit.play(this.pos);
+    sounds.brickHit.play(this.pos);
     brick.increaseHitCount();
     if (brick.shallBeDestroyed()) {
       Particles.BallDestroy(this.pos, color);
-      Sounds.BrickDestroy.play(this.pos);
+      sounds.brickDestroy.play(this.pos);
       emitter.emit('brickDestroyed', brick);
       brick.destroy();
     } else {
@@ -76,7 +76,7 @@ export class Ball extends L.EngineObject {
     this.strength.restore(); // Only paddle touch can restore the strength
     // Accelerate the sound based on the velocity
     const pitch = this.velocity.length() + 0.5;
-    Sounds.BallBounce.play(this.pos, 1, pitch);
+    sounds.ballBounce.play(this.pos, 1, pitch);
 
     const deltaX = this.pos.x - paddle.pos.x;
     this.velocity = this.velocity.rotate(deltaX * 0.3);
