@@ -13,10 +13,10 @@ import { Balls } from '/src/components/Balls';
 import { ModeManager } from '/src/managers/ModeManager';
 import { GameMode } from '/src/enums/mode';
 import { StateManager } from '/src/managers/StateManager';
-import { postProcessing, sound } from '/src/ui/store';
+import { oldTVScreenEffect, sound } from '/src/ui/store';
 import { BrickManager } from '/src/managers/BrickManager';
 import { AdManager } from '/src/managers/AdManager';
-import { TVShader } from '/src/post-processing/TVShader';
+import OldTVScreenShader from '/src/post-processing/tv-shader.glsl';
 
 L.setShowWatermark(Debug.enabled());
 L.setSoundEnable(sound());
@@ -76,7 +76,7 @@ export class Game {
 
     // Give it a chance to render the first frame
     setTimeout(() => this.state.changeTo('idle'));
-    if (postProcessing()) glInitPostProcess(TVShader, true);
+    if (oldTVScreenEffect()) glInitPostProcess(OldTVScreenShader, true);
   }
 
   private update() {

@@ -1,6 +1,8 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import { envSchema } from './src/utils/validations/env.schema';
+
+import glsl from 'vite-plugin-glsl';
 import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig(({ mode }) => {
@@ -34,7 +36,7 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    plugins: [solidPlugin()],
+    plugins: [solidPlugin(), glsl()],
     test: {
       setupFiles: ['./tests/unit/__setup__/setup.ts'],
       globals: true,

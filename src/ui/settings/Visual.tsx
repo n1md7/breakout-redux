@@ -1,4 +1,4 @@
-import { postProcessing, setPostProcessing } from '/src/ui/store';
+import { oldTVScreenEffect, setOldTVScreenEffect } from '/src/ui/store';
 import { Component } from 'solid-js';
 import { emitter } from '/src/utils/Emitter';
 
@@ -6,9 +6,7 @@ type Props = {};
 
 export const Visual: Component<Props> = () => {
   const handlePostProcessing = ({ target }: Event) => {
-    const { checked } = target as HTMLInputElement;
-    setPostProcessing(checked);
-    emitter.emit('postProcessing', postProcessing);
+    setOldTVScreenEffect((target as HTMLInputElement).checked);
   };
 
   return (
@@ -17,8 +15,8 @@ export const Visual: Component<Props> = () => {
         <b>Visual effects</b>
       </legend>
       <div>
-        <input type="checkbox" id="post-processing" onChange={handlePostProcessing} checked={postProcessing()} />
-        <label for="post-processing">Post processing</label>
+        <input type="checkbox" id="old-tv-screen" onChange={handlePostProcessing} checked={oldTVScreenEffect()} />
+        <label for="old-tv-screen">Old TV screen</label>
       </div>
     </fieldset>
   );

@@ -1,6 +1,6 @@
 import { Component, createSignal, JSX } from 'solid-js';
 import { emitter } from '/src/utils/Emitter';
-import { music, setMusic, setPostProcessing, postProcessing, sound, setSound } from '/src/ui/store';
+import { music, setMusic, setOldTVScreenEffect, oldTVScreenEffect, sound, setSound } from '/src/ui/store';
 
 type Props = {
   children?: JSX.Element;
