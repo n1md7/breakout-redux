@@ -1,5 +1,9 @@
 ## Breakout Redux - Brick-Breaking Bliss
 
+__Note__: Written in [LittleJS](https://github.com/KilledByAPixel/LittleJS/tree/main) and based on [Breakout Tutorial](https://github.com/KilledByAPixel/LittleJS/tree/main/examples/breakoutTutorial)
+
+### Description
+
 Prepare to embark on a nostalgic journey into the world of classic arcade gaming, with a contemporary twist! Breakout Redux is a captivating 2D game that pays homage to the beloved classic, Breakout, while introducing innovative game modes that will challenge your skills, reaction time, and strategic thinking.
 
 - Classic Mode: In this timeless mode, it's just you, the paddle, and the bouncing ball. Your mission is simple: obliterate every brick in your path with precision and skill. Each well-aimed hit results in the satisfying destruction of a brick, bringing you one step closer to victory.
