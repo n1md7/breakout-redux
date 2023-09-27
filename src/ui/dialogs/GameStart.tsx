@@ -7,6 +7,7 @@ import { Scores } from '/src/ui/components/Scores';
 import { BsJoystick } from 'solid-icons/bs';
 import { FaSolidHammer } from 'solid-icons/fa';
 import { Visual } from '/src/ui/settings/Visual';
+import config from '/src/utils/Config';
 
 type Props = {};
 export const GameStart: Component<Props> = () => {
@@ -19,7 +20,7 @@ export const GameStart: Component<Props> = () => {
   return (
     <dialog open={open()}>
       <h2>
-        Brick Breaker <FaSolidHammer />
+        {config.title} <FaSolidHammer />
       </h2>
       <Scores highScoreOnly />
       <Mode />
