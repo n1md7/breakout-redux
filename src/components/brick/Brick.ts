@@ -2,6 +2,7 @@ import * as L from 'littlejsengine/build/littlejs.esm';
 import { Colors, Tiles } from '/src/constants/color';
 import { RandomPicker } from '/src/components/utils/RandomPicker';
 import { BrickType } from '/src/enums/brick';
+import { emitter } from '/src/utils/Emitter';
 
 type Strength = number;
 

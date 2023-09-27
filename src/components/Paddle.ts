@@ -1,4 +1,5 @@
 import * as L from 'littlejsengine/build/littlejs.esm';
+import { Brick } from '/src/components/brick/Brick';
 
 export class Paddle extends L.EngineObject {
   constructor(private readonly levelSize: L.Vector2) {

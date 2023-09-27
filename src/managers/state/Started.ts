@@ -15,6 +15,7 @@ export class Started extends State {
 
     this.onBonusCollected = this.onBonusCollected.bind(this);
     this.onBrickDestroyed = this.onBrickDestroyed.bind(this);
+    this.onBrickCrossedLine = this.onBrickCrossedLine.bind(this);
   }
 
   override async attach() {
@@ -28,6 +29,7 @@ export class Started extends State {
 
     emitter.on('bonusCollected', this.onBonusCollected);
     emitter.on('brickDestroyed', this.onBrickDestroyed);
+    emitter.on('brickCrossedLine', this.onBrickCrossedLine);
 
     if (!this.game.balls.hasValue() && this.game.lives.hasValue()) {
       sounds.gameStart.play();
@@ -43,6 +45,7 @@ export class Started extends State {
 
     emitter.off('bonusCollected', this.onBonusCollected);
     emitter.off('brickDestroyed', this.onBrickDestroyed);
+    emitter.off('brickCrossedLine', this.onBrickCrossedLine);
 
     await super.detach();
   }
@@ -76,6 +79,11 @@ export class Started extends State {
 
   private onBonusCollected(bonus: Bonus) {
     this.game.bonus.collect(bonus);
+  }
+
+  private onBrickCrossedLine(brick: Brick) {
+    sounds.gameLose.play();
+    return this.game.state.changeTo('gameOver');
   }
 
   private onBrickDestroyed(brick: Brick) {
