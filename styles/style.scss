@@ -14,6 +14,7 @@ body {
   background-color: $color !important;
   width: 100vw;
   height: 100vh;
+  overflow: hidden; /* Prevent body from scrolling */
 }
 
 dialog {
@@ -21,7 +22,8 @@ dialog {
   bottom: 0;
   border-radius: 8px;
   z-index: 10;
-  overflow: auto;
+  overflow-y: auto; /* Make the dialog scrollable vertically */
+  max-height: 80vh; /* Set a maximum height for the dialog */
   background-image: radial-gradient(#0000006e, transparent);
 
   h2 {
@@ -101,5 +103,4 @@ dialog {
       }
     }
   }
-
 }
