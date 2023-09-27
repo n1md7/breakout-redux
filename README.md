@@ -1,6 +1,5 @@
 ## Breakout Redux - Brick-Breaking Bliss
 
-
 Prepare to embark on a nostalgic journey into the world of classic arcade gaming, with a contemporary twist! Breakout Redux is a captivating 2D game that pays homage to the beloved classic, Breakout, while introducing innovative game modes that will challenge your skills, reaction time, and strategic thinking.
 
 - Classic Mode: In this timeless mode, it's just you, the paddle, and the bouncing ball. Your mission is simple: obliterate every brick in your path with precision and skill. Each well-aimed hit results in the satisfying destruction of a brick, bringing you one step closer to victory.
@@ -18,6 +17,9 @@ Boost Your Game: Need a helping hand? You can double your wins by watching short
 Retro Visuals: Immerse yourself in nostalgia with the old TV shader visual effect. Relive the golden age of gaming with a visual style that takes you back in time.
 
 Experience the evolution of Breakout like never before. Breakout Redux combines classic gameplay with innovative modes and dazzling visuals, ensuring hours of entertainment and an unforgettable journey through the arcade ages. Can you break all the bricks and become the ultimate Breakout champion? Get ready to find out!
+
+![800x800.png](docs/imgs/800x800.png)
+
 
 ### Running
 
