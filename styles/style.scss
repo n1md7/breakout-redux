@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Skranji&display=swap');
 
 $color: #494746;
+
+:root {
+  --dialog-max-height: 100vh; /* Default value */
+}
+
 html, body {
   padding: 0;
   margin: 0;
@@ -22,8 +27,9 @@ dialog {
   bottom: 0;
   border-radius: 8px;
   z-index: 10;
-  overflow-y: auto; /* Make the dialog scrollable vertically */
-  max-height: 80vh; /* Set a maximum height for the dialog */
+  overflow-y: auto;
+  max-height: var(--dialog-max-height);
+
   background-image: radial-gradient(#0000006e, transparent);
 
   h2 {
